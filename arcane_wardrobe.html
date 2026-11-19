@@ -1,0 +1,2221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>The Arcane Wardrobe v37 — Item Catalog</title>
+<style>
+:root{--bg:#0d1512;--panel:#182620;--panel2:#22352b;--line:#455e4a;--text:#f1ebd9;--muted:#adb9ab;--gold:#e7c37f;--gold2:#f2d8a1;--green:#93c9aa;--red:#ffc5b8}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 42% -18%,#354c3b,transparent 53%),var(--bg);color:var(--text);font:14px/1.5 Arial,Helvetica,sans-serif}
+h1,h2,h3,.item-name,.brandmark{font-family:Georgia,'Times New Roman',serif;font-weight:400}
+button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.52;cursor:not-allowed}
+button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+a{color:var(--gold2)}
+.shell{max-width:1420px;margin:auto;padding:24px 24px 38px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 0 20px;border-bottom:1px solid #71836d55}
+.brand{display:flex;align-items:center;gap:13px}.brandmark{width:52px;height:52px;border:1px solid #d6b475;border-radius:50%;display:grid;place-items:center;font-size:32px;color:var(--gold);box-shadow:inset 0 0 0 5px #d6b47525}
+.eyebrow,.cardtitle,.tiny-label{color:var(--gold);font:bold 11px/1.5 Arial,sans-serif;letter-spacing:1.9px;text-transform:uppercase}
+h1{font-size:clamp(27px,3vw,38px);margin:2px 0 4px;line-height:1.1}.sub{margin:0;color:var(--muted);font-size:12px}
+.count{white-space:nowrap;color:var(--gold2);border:1px solid #69785879;background:#26372e;padding:9px 15px;border-radius:30px;font-weight:700;font-size:12px}
+.card{background:linear-gradient(145deg,#1c2d25,#14201b 90%);border:1px solid #52684f9a;border-radius:13px;overflow:hidden;box-shadow:0 20px 50px #0004}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin:16px 0 20px;padding:13px 16px}
+.toolbar-info{min-width:210px;flex:1}.toolbar-status{font-size:13px;font-weight:700;color:var(--green)}.toolbar-hint{font-size:12px;color:var(--muted);margin-top:2px}
+.toolbar-actions,.bottom-actions,.editor-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.primary,.ghost,.danger-btn{border:1px solid #6b7b65;border-radius:6px;padding:10px 13px;background:#26382e;color:var(--text);font-weight:700;font-size:12px}
+.primary{background:#d0ac71;color:#182119;border-color:#e5c187}.primary:hover{background:#f0cf90}
+.ghost:hover{border-color:var(--gold);color:var(--gold2)}.danger-btn{border-color:#925d51;color:var(--red);background:#39251f}.danger-btn:hover{background:#542f26}
+.main{display:grid;grid-template-columns:minmax(410px,1fr) minmax(390px,.98fr);gap:18px;align-items:stretch}
+.cardhead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 19px;border-bottom:1px solid #52664965}.cardhead h2{margin:0}.cardhead .hint{font-size:11px;color:var(--muted)}
+.figure-area{position:relative;min-height:658px;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 47%,#293e32,#192920 50%,transparent 72%);padding:10px 6px}
+.figure-svg{height:612px;max-width:100%;width:auto;overflow:visible}.body-etch{fill:#22352d;stroke:#a3aa9088;stroke-width:1.7}.body-detail{fill:none;stroke:#a3aa9070;stroke-width:1.35}.outer-mark{stroke:#7386754f;fill:none;stroke-width:1.3}
+.anatomy [data-zone] .spot{stroke:#c0bda588;stroke-width:1.4;fill:#a2bb9c12;cursor:pointer;transition:fill .16s,stroke .16s}
+.anatomy [data-zone].active .spot,.anatomy [data-zone]:hover .spot,.anatomy [data-zone]:focus .spot{fill:#dfb66d65;stroke:#ffe3a0;stroke-width:2.6;filter:drop-shadow(0 0 5px #f3ca777a)}
+/* Equipped status always takes precedence over browsing/hover gold fill. */
+.anatomy [data-zone].equipped .spot,.anatomy [data-zone].equipped.active .spot,.anatomy [data-zone].equipped:hover .spot,.anatomy [data-zone].equipped:focus .spot{fill:#14345b;stroke:#edc778;stroke-width:1.8;filter:drop-shadow(0 0 3px #050d17)}
+.anatomy [data-zone].locked:not(.equipped) .spot{stroke:#ffe2a0;stroke-width:2.6}
+.anatomy [data-zone]:focus-visible{outline:none;filter:drop-shadow(0 0 6px var(--gold))}.figure-label{font:bold 12px Arial,sans-serif;fill:#e8d4a8;pointer-events:none}
+.side-buttons{position:absolute;top:58px;left:12px;display:flex;flex-direction:column;gap:7px;align-items:flex-start}.side-buttons.right{left:auto;right:12px;align-items:flex-end}
+.zone-btn{border:1px solid #586d58;background:#1a2b22;color:#dce2d6;border-radius:6px;padding:7px 9px;font-weight:bold;font-size:11px;min-width:94px;text-align:left}.zone-btn em{float:right;font-weight:400;font-style:normal;opacity:.7;margin-left:12px}.zone-btn:hover,.zone-btn.active{border-color:var(--gold);color:var(--gold2);background:#3b4532}
+.zone-btn.equipped,.zone-btn.equipped.active,.zone-btn.equipped:hover{background:#14345b;border-color:#edc778;color:#fae2ae}
+.zone-btn.locked{outline:2px solid var(--gold);outline-offset:2px}
+.figure-foot button{border:1px solid #8b986f;border-radius:5px;background:transparent;color:var(--gold2);padding:3px 7px;font-size:11px;margin-left:7px}
+.figure-foot button:hover{border-color:#f2d8a1}
+.figure-foot button:disabled{display:none}
+.figure-foot{border-top:1px solid #52664966;color:var(--muted);font-size:12px;text-align:center;padding:11px 18px 14px}.figure-foot strong{color:var(--gold2)}
+.browse{min-height:740px;display:flex;flex-direction:column}.controls{padding:16px;border-bottom:1px solid #53684f6d}.search{background:#101d17;border:1px solid #647d60;border-radius:7px;color:var(--text);font-size:13px;padding:12px 13px;width:100%}.search::placeholder{color:#8ea08d}
+.subcontrols{display:flex;gap:8px;margin-top:9px;align-items:center}/* Checkable source picker supports multiple source books at once. */
+.source-menu{position:relative;flex:1;min-width:130px}
+.source-menu summary{cursor:pointer;list-style:none;border:1px solid #61785e;background:#1b3025;border-radius:6px;color:#f1ebd9;padding:9px 11px;font-weight:700;font-size:12px;user-select:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.source-menu summary::-webkit-details-marker{display:none}
+.source-menu summary:after{content:' ▾';color:var(--gold2)}
+.source-menu[open] summary{border-color:var(--gold)}
+.source-menu summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.source-panel{position:absolute;z-index:15;top:calc(100% + 5px);left:0;right:0;min-width:225px;max-width:320px;background:#14251b;border:1px solid #b49969;border-radius:8px;box-shadow:0 13px 35px #000b;padding:9px}
+.source-quick-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid #455a47;padding:0 2px 8px;margin-bottom:5px;color:#b5c6b3;font-size:11px}
+.source-quick-actions button{border:1px solid #697e60;background:#23392b;color:var(--gold2);border-radius:4px;padding:4px 8px;font-size:11px}
+.source-checks{max-height:226px;overflow:auto;display:flex;flex-direction:column;gap:2px}
+.source-option{display:flex;align-items:center;gap:9px;padding:7px;border-radius:5px;color:#e6ebdf;font-size:12px;cursor:pointer;overflow-wrap:anywhere}
+.source-option:hover{background:#293d2e}.source-option input{accent-color:#e1be77;width:16px;height:16px;flex-shrink:0}
+.subcontrols select,.editor-tools select{min-width:0;flex:1;background:#1b3025;color:var(--text);border:1px solid #526a50;border-radius:6px;padding:9px;font-size:12px}
+.heading{padding:20px 20px 9px;display:flex;gap:12px;justify-content:space-between;align-items:center}.heading h2{font-size:29px;margin:2px 0}.heading p{color:var(--muted);font-size:12px;margin:0}.zone-count{font-size:11px;font-weight:bold;color:#e6d2a2;white-space:nowrap}
+.list-container{flex:1;max-height:557px;overflow:auto;padding:10px 15px 20px;scrollbar-color:#5f7a61 #1a2b22}.item-grid{display:flex;flex-direction:column;gap:7px}
+.item{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#24372c;border:1px solid #4c6550;border-radius:7px;padding:10px 11px;min-height:61px}.item:hover{border-color:#ad9b6b}.item.worn{border-color:#8da0a8;box-shadow:inset 3px 0 #e7c37f}.item-main{min-width:0}.item-name{font-size:16px;line-height:1.2;margin-bottom:5px}.item-meta{font-size:11px;color:#b9c8b5}.item-actions{display:flex;flex-shrink:0;gap:6px}.iconbtn{background:#15251d;border:1px solid #687a63;border-radius:6px;color:var(--gold2);min-width:31px;height:32px;font-size:17px}.iconbtn:hover{background:#38503b}.iconbtn.active{color:#ffdf89;border-color:#ffdf89}
+.equip-btn{background:#172d44;border:1px solid #738da1;border-radius:6px;color:#d8e6f2;height:32px;padding:0 9px;font-size:11px;font-weight:700;white-space:nowrap}
+.equip-btn:hover{border-color:var(--gold);color:var(--gold2)}
+.equip-btn.active{background:#15385d;color:#f9dfaa;border:1px solid var(--gold)}
+.attune-label{display:inline-block;border:1px solid #6c8166;border-radius:4px;font-size:10px;font-weight:700;line-height:1.5;padding:1px 5px;margin-top:5px;color:#cce1ce}
+.attune-label.yes{color:#f4d69a;border-color:#a98a51;background:#403724}
+.attune-label.unknown{color:#c6c3b5;border-color:#6b726a}
+.view-lock{font-size:11px;color:#f0d090;font-weight:bold;margin-left:6px}
+.empty{text-align:center;padding:42px 12px;color:var(--muted);line-height:1.6}.empty strong{display:block;font:22px Georgia,serif;color:var(--text);margin-bottom:7px}.bottom-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;border-top:1px solid #52684f88;background:#1a2b22}.status{font-size:12px;color:var(--muted)}
+.editor{margin-top:18px}.editor-intro{padding:14px 18px;border-bottom:1px solid #52684f7a;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;align-items:center}.editor-intro p{color:var(--muted);font-size:12px;margin:5px 0 0}.editor-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.editor-tools .search{min-width:180px;flex:1;padding:9px 11px}.editor-tools select{min-width:115px;max-width:170px}.editor-content{max-height:450px;overflow:auto}.table{width:100%;border-collapse:collapse;text-align:left;min-width:760px}.table th{position:sticky;top:0;background:#273a2e;color:#e7c88e;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:11px 12px;border-bottom:1px solid #61745c;z-index:1}.table td{padding:9px 12px;border-bottom:1px solid #3d5242;font-size:12px;vertical-align:middle}.table tr:hover td{background:#273a2e}.table td:first-child{font-weight:700;color:#f0e8d5}.table td.muted{color:var(--muted)}.small-btn{padding:6px 9px;border:1px solid #637a5f;border-radius:5px;background:#21362a;color:#e6dec9;white-space:nowrap;font-size:11px}.small-btn:hover{border-color:var(--gold)}.small-btn.danger{color:#ffc4b3;border-color:#754c42}.editor-foot{border-top:1px solid #52684f80;padding:11px 18px;color:var(--muted);font-size:11px}
+.footer{padding:18px 4px 0;display:flex;gap:30px;justify-content:space-between;flex-wrap:wrap;color:var(--muted);font-size:12px}.footer p{margin:0;max-width:820px}
+.modal-scrim{position:fixed;inset:0;background:#020704d9;display:none;align-items:center;justify-content:center;z-index:50;padding:15px}.modal-scrim.open{display:flex}.modal{width:100%;max-width:530px;padding:23px;background:#1d3026;border:1px solid #b79d69;border-radius:12px;box-shadow:0 20px 60px #000b}.modal h3{font-size:28px;margin:0 0 7px}.modal p{font-size:12px;color:var(--muted);margin:0 0 17px}.modal-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{font-size:12px;font-weight:700;color:#e9d39f}.field.wide{grid-column:1/-1}.field input,.field select{margin-top:6px;display:block;width:100%;background:#0f1d16;border:1px solid #648063;color:var(--text);border-radius:6px;padding:11px;font-size:13px}.field .optional{font-weight:400;color:#afbdab}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.toast{position:fixed;z-index:90;bottom:19px;left:50%;transform:translateX(-50%);padding:11px 16px;max-width:90vw;line-height:1.4;background:#d8bc83;border-radius:7px;box-shadow:0 12px 40px #0009;color:#142019;font-weight:700;display:none}.toast.show{display:block}
+@media(max-width:1050px){.main{grid-template-columns:minmax(365px,1fr) minmax(350px,1fr)}.figure-svg{height:560px}.figure-area{min-height:598px}.side-buttons{left:6px}.side-buttons.right{right:6px}.zone-btn{min-width:78px;font-size:10px;padding:6px 7px}}
+@media(max-width:800px){.main{display:block}.browse{margin-top:16px;min-height:500px}.figure-area{min-height:540px}.figure-svg{height:500px}.side-buttons{top:40px}.editor-intro{align-items:stretch}.editor-tools{width:100%}}
+@media(max-width:480px){.shell{padding:12px}.top{align-items:flex-start}.brandmark{width:40px;height:40px;font-size:25px}h1{font-size:27px}.count{display:none}.figure-area{min-height:465px}.figure-svg{height:420px}.side-buttons{top:35px}.zone-btn{min-width:70px;font-size:9px;padding:6px 5px}.zone-btn em{margin-left:4px}.toolbar-actions{width:100%}.toolbar-actions button{flex:1}.modal-fields{grid-template-columns:1fr}.field.wide{grid-column:auto}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Tighter item browser: the rarity, slot, attunement and source share one line. */
+.item-grid{gap:5px}.item{padding:6px 8px;min-height:46px;gap:7px}.item-name{font-size:14px;font-weight:700;margin-bottom:2px;line-height:1.18}.item-main{flex:1;overflow:hidden}.item-meta{display:flex;gap:6px;align-items:center;white-space:nowrap;overflow:hidden;line-height:1.3}.metadata-copy{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.item-actions{gap:4px}.item-actions .iconbtn{min-width:28px;height:28px;font-size:16px}.equip-btn{height:28px;padding:0 7px;font-size:10px}
+.attune-label{flex:0 0 auto;white-space:nowrap;font-size:10px;margin:0;line-height:1.35;padding:1px 4px}
+.charm-spot{fill:#cba95c40!important;stroke:#e5c68b!important;stroke-width:1.8!important}.anatomy [data-zone=charms].equipped .charm-spot{fill:#14345b!important;stroke:#edc778!important}.figure-label{user-select:none;pointer-events:none}
+.zone-btn.subzone{margin-left:8px;min-width:100px;font-size:10px;border-left:3px solid #b59a64}
+.field textarea{margin-top:6px;display:block;width:100%;background:#0f1d16;border:1px solid #648063;color:var(--text);border-radius:6px;padding:10px 11px;font-size:13px;line-height:1.45;resize:vertical;max-height:240px}
+.modal-scrim{overflow-y:auto}.modal{max-height:min(94vh,920px);overflow-y:auto}
+.select-cell{width:32px;text-align:center}.select-cell input{accent-color:#e3bd79;width:17px;height:17px;cursor:pointer}
+.description-cell{max-width:235px;min-width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:400!important}
+.editor-content .table{min-width:980px}.table th.select-cell{padding:10px 6px}
+.detail-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}.item-detail-dialog h3{margin:0 0 13px;line-height:1.2}.detail-heading .iconbtn{font-size:24px;width:32px;height:32px}
+.detail-metadata{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0 20px}.detail-pill{padding:9px 11px;border:1px solid #5b7058;background:#192b22;border-radius:6px;display:flex;flex-direction:column;gap:1px;font-size:12px;overflow-wrap:anywhere}
+.detail-pill strong{color:#e7c37f;text-transform:uppercase;letter-spacing:1px;font-size:10px}.detail-section-label{font-size:11px;font-weight:bold;letter-spacing:1.1px;text-transform:uppercase;color:var(--gold)}
+.item-detail-dialog .detail-description{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65;color:var(--text);margin:8px 0 18px;font-size:13px;max-height:260px;overflow:auto}.detail-description.is-empty{color:var(--muted);font-style:italic}
+.confirm-dialog{max-width:450px}.confirm-dialog p{line-height:1.65;overflow-wrap:anywhere}
+@media(max-width:500px){.item{gap:4px;padding:6px}.item-name{font-size:13px}.item-actions{gap:3px}.item-actions .iconbtn{min-width:27px;height:27px}.equip-btn{height:27px;padding:0 5px}.detail-metadata{grid-template-columns:1fr 1fr}.zone-btn.subzone{margin-left:2px;min-width:76px;font-size:9px}}
+
+
+/* v6: Edit Body Location directly from the database table. */
+.editor-location-select{display:block;width:100%;min-width:145px;max-width:220px;background:#20372a;color:var(--text);border:1px solid #728a67;border-radius:5px;padding:7px 8px;font-size:12px;cursor:pointer}
+.editor-location-select:hover{border-color:var(--gold)}
+.editor-location-select.is-unknown{border-color:#94765c;color:#ffe1ac;background:#382a20}
+.editor-location-cell{min-width:165px}
+@media(max-width:600px){.editor-location-select{min-width:140px}}
+
+/* v4: Compact title, CSV controls below the wearer/collection, three desktop display profiles.
+   CSS sizing is responsive; this does not modify browser zoom or OS scaling. */
+:root{
+ --app-max-width:1570px;--figure-size:568px;--figure-area-min:615px;
+ --browse-min:696px;--list-limit:492px;
+}
+html[data-display="1080p"]{--app-max-width:1770px;--figure-size:566px;--figure-area-min:610px;--browse-min:700px;--list-limit:490px}
+html[data-display="1440p"]{--app-max-width:2240px;--figure-size:760px;--figure-area-min:805px;--browse-min:892px;--list-limit:675px}
+html[data-display="4k"]{--app-max-width:3280px;--figure-size:1130px;--figure-area-min:1200px;--browse-min:1340px;--list-limit:1030px}
+@media(min-width:1600px) and (min-height:750px){html[data-display="auto"]{--app-max-width:1770px;--figure-size:566px;--figure-area-min:610px;--browse-min:700px;--list-limit:490px}}
+@media(min-width:2250px) and (min-height:1110px){html[data-display="auto"]{--app-max-width:2240px;--figure-size:760px;--figure-area-min:805px;--browse-min:892px;--list-limit:675px}}
+@media(min-width:3400px) and (min-height:1680px){html[data-display="auto"]{--app-max-width:3280px;--figure-size:1130px;--figure-area-min:1200px;--browse-min:1340px;--list-limit:1030px}}
+.shell{max-width:var(--app-max-width);padding:13px 18px 30px}
+.top{min-height:52px;padding:0 0 10px;gap:12px}
+.brand{gap:10px}.brandmark{height:40px;width:40px;font-size:26px;box-shadow:inset 0 0 0 3px #d6b47525}
+.top .eyebrow{font-size:9px;letter-spacing:1.5px}.top h1{font-size:clamp(23px,1.75vw,31px);margin:1px 0 0;line-height:1.05}.top .sub{font-size:11px;line-height:1.25}
+.header-tools{display:flex;gap:12px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+.display-choice{display:flex;gap:8px;align-items:center;color:var(--gold);font-size:10px;font-weight:700;letter-spacing:.7px;white-space:nowrap}
+.display-choice select{background:#20342a;border:1px solid #60745b;border-radius:6px;color:#f0e8d4;padding:7px 9px;min-width:137px;font-size:12px;letter-spacing:0}
+.top .count{padding:7px 11px;font-size:11px}
+.main{margin-top:14px;gap:16px}
+.figure-svg{height:var(--figure-size)}.figure-area{min-height:var(--figure-area-min)}
+.browse{min-height:var(--browse-min)}.list-container{max-height:var(--list-limit)}
+.toolbar{margin:14px 0 14px;padding:10px 15px}.toolbar-actions .ghost,.toolbar-actions .primary{padding:8px 12px}
+.zone-btn{display:flex;justify-content:space-between;align-items:center;gap:8px;min-width:120px;padding:6px 8px}
+.zone-btn em{float:none;margin:0;opacity:.95;white-space:nowrap;color:var(--gold2);font-variant-numeric:tabular-nums}
+.zone-btn.subzone{min-width:134px;margin-left:6px}
+.side-buttons{top:42px;gap:6px;max-width:calc(50% - 80px)}
+.side-buttons.right{align-items:flex-end}
+.subcontrols{flex-wrap:nowrap}
+.source-menu{min-width:100px}
+.filter-menu{position:relative;flex:0 0 auto;min-width:85px}
+.filter-menu summary{cursor:pointer;user-select:none;list-style:none;border:1px solid #61785e;background:#1b3025;color:var(--text);border-radius:6px;padding:9px 11px;font-size:12px;font-weight:700;white-space:nowrap}
+.filter-menu summary::-webkit-details-marker{display:none}
+.filter-menu summary:after{content:' ▾';color:var(--gold2)}
+.filter-menu[open] summary,.filter-menu.has-filters summary{border-color:var(--gold);color:var(--gold2)}
+.filter-panel{position:absolute;z-index:16;top:calc(100% + 5px);right:0;min-width:245px;max-width:calc(100vw - 30px);display:flex;flex-direction:column;gap:11px;background:#14251b;border:1px solid #b49969;border-radius:8px;padding:13px;box-shadow:0 13px 35px #000b}
+.filter-panel label{display:flex;flex-direction:column;gap:5px;color:var(--gold2);font-size:11px;font-weight:700}
+.filter-panel select{width:100%;background:#1b3025;border:1px solid #697e60;border-radius:5px;color:var(--text);padding:8px;font-size:13px}
+.filter-panel button{margin-left:auto}
+@media(max-width:1050px){
+ .figure-svg{height:min(var(--figure-size),560px)}.figure-area{min-height:580px}
+ .zone-btn{min-width:91px;font-size:10px;padding:6px 6px;gap:5px}.zone-btn.subzone{min-width:101px;margin-left:0}
+ .side-buttons{top:38px;max-width:calc(50% - 55px)}
+}
+@media(max-width:800px){
+ .main{margin-top:12px}.figure-area{min-height:535px}.figure-svg{height:min(var(--figure-size),500px)}
+ .browse{min-height:520px}.list-container{max-height:520px}
+ .header-tools{gap:8px}.display-choice span{display:none}
+ .side-buttons{max-width:39%;top:33px}
+}
+@media(max-width:480px){
+ .shell{padding:10px}.top{align-items:center;gap:6px}
+ .top .eyebrow,.top .sub{display:none}.top h1{font-size:22px}
+ .brand{gap:6px}.brandmark{height:34px;width:34px;font-size:22px}
+ .display-choice select{min-width:87px;max-width:105px;font-size:10px;padding:5px 4px;text-overflow:ellipsis}
+ .figure-area{min-height:465px}.figure-svg{height:420px}
+ .zone-btn{min-width:72px;gap:2px;font-size:9px;padding:6px 4px}
+ .zone-btn.subzone{min-width:80px;margin-left:0;font-size:8px}
+ .zone-btn em{font-size:9px}.side-buttons{max-width:35%;top:34px}
+ .subcontrols{gap:4px;flex-wrap:wrap}.source-menu{flex:1 1 105px}
+ .filter-menu{flex:0 1 auto}.filter-menu summary{font-size:11px;padding:8px 6px}
+ .subcontrols .ghost{padding:8px 7px;font-size:11px}
+ .toolbar{margin:12px 0;padding:10px}.toolbar-actions{width:100%}.toolbar-actions button{flex:1 1 39%;padding:8px 5px}
+}
+/* Increase usable text and controls at genuine large desktop sizes, not via zoom. */
+@media(min-width:2000px){
+ html[data-display="1440p"] .zone-btn,html[data-display="4k"] .zone-btn,html[data-display="auto"] .zone-btn{font-size:13px;min-width:156px;padding:9px 11px}
+ html[data-display="1440p"] .zone-btn.subzone,html[data-display="4k"] .zone-btn.subzone,html[data-display="auto"] .zone-btn.subzone{min-width:165px}
+ html[data-display="1440p"] .item-name,html[data-display="4k"] .item-name,html[data-display="auto"] .item-name{font-size:17px}
+ html[data-display="1440p"] .item-meta,html[data-display="4k"] .item-meta,html[data-display="auto"] .item-meta{font-size:13px}
+ html[data-display="1440p"] .item,html[data-display="4k"] .item,html[data-display="auto"] .item{min-height:58px;padding:10px 12px}
+}
+@media(min-width:3300px){
+ html[data-display="4k"] body,html[data-display="auto"] body{font-size:18px}
+ html[data-display="4k"] .top h1,html[data-display="auto"] .top h1{font-size:40px}
+ html[data-display="4k"] .brandmark,html[data-display="auto"] .brandmark{width:58px;height:58px;font-size:36px}
+ html[data-display="4k"] .zone-btn,html[data-display="auto"] .zone-btn{font-size:18px;min-width:215px;padding:12px 16px}
+ html[data-display="4k"] .zone-btn.subzone,html[data-display="auto"] .zone-btn.subzone{min-width:228px}
+ html[data-display="4k"] .item,html[data-display="auto"] .item{min-height:78px;padding:14px 17px}
+ html[data-display="4k"] .item-name,html[data-display="auto"] .item-name{font-size:24px}
+ html[data-display="4k"] .item-meta,html[data-display="auto"] .item-meta{font-size:16px}
+ html[data-display="4k"] .attune-label,html[data-display="auto"] .attune-label{font-size:13px}
+ html[data-display="4k"] .item-actions button,html[data-display="auto"] .item-actions button{height:40px;min-width:44px;font-size:17px}
+ html[data-display="4k"] .heading h2,html[data-display="auto"] .heading h2{font-size:40px}
+ html[data-display="4k"] .cardhead,html[data-display="auto"] .cardhead{padding:20px 26px}
+ html[data-display="4k"] .controls,html[data-display="auto"] .controls{padding:22px}
+ html[data-display="4k"] .search,html[data-display="auto"] .search{font-size:17px;padding:14px}
+ html[data-display="4k"] .heading,html[data-display="auto"] .heading{padding:22px 25px 12px}
+ html[data-display="4k"] .cardtitle,html[data-display="auto"] .cardtitle{font-size:15px}
+ html[data-display="4k"] .cardhead .hint,html[data-display="auto"] .cardhead .hint{font-size:14px}
+ html[data-display="4k"] .filter-menu summary,html[data-display="auto"] .filter-menu summary{font-size:16px;padding:12px}
+ html[data-display="4k"] .source-menu summary,html[data-display="auto"] .source-menu summary{font-size:16px;padding:12px}
+ html[data-display="4k"] .subcontrols button,html[data-display="auto"] .subcontrols button{font-size:15px}
+ html[data-display="4k"] .display-choice select,html[data-display="auto"] .display-choice select{font-size:16px}
+}
+
+
+/* v8: Keep The Collection the same height irrespective of how many items are shown.
+   The item list scrolls internally; CSV/editor remain below the wearer/collection. */
+:root{--collection-height:706px}
+html[data-display="1080p"]{--collection-height:706px}
+html[data-display="1440p"]{--collection-height:895px}
+html[data-display="4k"]{--collection-height:1335px}
+@media(min-width:1600px) and (min-height:750px){html[data-display="auto"]{--collection-height:706px}}
+@media(min-width:2250px) and (min-height:1110px){html[data-display="auto"]{--collection-height:895px}}
+@media(min-width:3400px) and (min-height:1680px){html[data-display="auto"]{--collection-height:1335px}}
+.main{align-items:start}
+.browse{height:var(--collection-height);min-height:0;max-height:var(--collection-height)}
+.browse>.cardhead,.browse>.controls,.browse>.heading,.browse>.bottom-bar{flex:0 0 auto}
+.browse .list-container{flex:1 1 auto;min-height:0;max-height:none;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
+@media(max-width:800px){.browse{height:600px;max-height:600px;min-height:0}}
+@media(max-width:480px){.browse{height:540px;max-height:540px;min-height:0}}
+
+
+/* v9: Compact, one-line region title. Both desktop cards share their actual
+   grid-row height, and only the item list scrolls. No fixed-height mismatch. */
+.main{align-items:stretch}
+.browse{height:100%;min-height:0;max-height:none}
+.browse .list-container{height:0;flex:1 1 0;min-height:0;max-height:none;overflow-x:hidden;overflow-y:auto}
+.browse .controls{padding:11px 15px}
+.browse .controls .search{padding:9px 12px}
+.browse .subcontrols{margin-top:7px}
+.browse .heading{padding:9px 15px;min-height:48px;display:flex;align-items:center;gap:10px}
+.browse .region-line{display:flex;align-items:baseline;gap:10px;flex:1 1 auto;min-width:0;white-space:nowrap}
+.browse .heading h2{font-size:21px;line-height:1.2;white-space:nowrap;flex-shrink:0;margin:0}
+.browse .heading p{font-size:12px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1 1 auto;margin:0}
+.browse .heading .zone-count{font-size:11px;flex-shrink:0}
+@media(min-width:3300px){
+ html[data-display="4k"] .browse .controls,html[data-display="auto"] .browse .controls{padding:14px 22px}
+ html[data-display="4k"] .browse .controls .search,html[data-display="auto"] .browse .controls .search{padding:11px 14px}
+ html[data-display="4k"] .browse .heading,html[data-display="auto"] .browse .heading{padding:12px 24px;min-height:61px}
+ html[data-display="4k"] .browse .heading h2,html[data-display="auto"] .browse .heading h2{font-size:30px}
+ html[data-display="4k"] .browse .heading p,html[data-display="auto"] .browse .heading p{font-size:17px}
+ html[data-display="4k"] .browse .heading .zone-count,html[data-display="auto"] .browse .heading .zone-count{font-size:14px}
+}
+@media(max-width:800px){.browse{height:600px;max-height:600px;min-height:0}}
+@media(max-width:480px){
+ .browse{height:540px;max-height:540px;min-height:0}
+ .browse .heading{padding:8px 10px;gap:6px}
+ .browse .region-line{gap:6px}
+ .browse .heading h2{font-size:18px}
+ .browse .heading p{font-size:10px}
+ .browse .heading .zone-count{font-size:10px}
+}
+
+
+/* v10 — Two application views. The Wardrobe uses exactly the available
+   viewport height; only the Collection's item rows scroll internally.
+   The CSV editor occupies its own view and its table scrolls internally. */
+[hidden]{display:none!important}
+html,body{height:100%;min-height:0;overflow:hidden}
+body{overscroll-behavior:none}
+.shell{height:100vh;height:100dvh;max-height:100dvh;display:flex;flex-direction:column;overflow:hidden;padding:clamp(8px,1vh,16px) 18px 12px}
+.shell>.top{flex:0 0 auto;min-height:0;padding-bottom:9px}
+.view-switch{white-space:nowrap;padding:7px 12px}
+.view-switch.active{border-color:var(--gold);color:var(--gold2);background:#354738}
+.wardrobe-view{flex:1 1 0;display:flex;flex-direction:column;min-height:0}
+.wardrobe-view .main{flex:1 1 0;min-height:0;margin-top:10px;align-items:stretch}
+.wardrobe-view .main>.card{height:100%;min-height:0;max-height:100%;min-width:0}
+.wardrobe-view .main>section:first-child{display:flex;flex-direction:column}
+.wardrobe-view .figure-area{min-height:0;flex:1 1 0;overflow:hidden;padding:6px}
+.wardrobe-view .figure-svg{height:100%;width:auto;max-height:100%;max-width:100%;flex:0 1 auto}
+.wardrobe-view .figure-foot{flex:0 0 auto}
+.wardrobe-view .browse{height:100%;min-height:0;max-height:100%;display:flex;flex-direction:column}
+.wardrobe-view .browse>.cardhead,.wardrobe-view .browse>.controls,.wardrobe-view .browse>.heading,.wardrobe-view .browse>.bottom-bar{flex:0 0 auto}
+.wardrobe-view .browse .list-container{height:0;flex:1 1 0;min-height:0;max-height:none;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
+.data-view{flex:1 1 0;min-height:0;display:flex;flex-direction:column;overflow:hidden;gap:10px;padding-top:10px}
+.data-head{display:flex;align-items:center;justify-content:space-between;gap:15px;flex:0 0 auto;padding:2px 1px 5px}
+.data-head h2{font:normal 25px/1.12 Georgia,'Times New Roman',serif;margin:2px 0 4px;color:var(--text)}
+.data-head p{font-size:12px;color:var(--muted);margin:0}
+.data-view .toolbar{flex:0 0 auto;margin:0;padding:10px 14px}
+.data-view .editor{flex:1 1 0;display:flex;flex-direction:column;min-height:0;max-height:none;margin:0}
+.data-view .editor>.cardhead,.data-view .editor>.editor-intro,.data-view .editor>.editor-foot{flex:0 0 auto}
+.data-view .editor-content{flex:1 1 0;min-height:0;max-height:none;overflow:auto;overscroll-behavior:contain}
+.data-notes{flex:0 0 auto;border:1px solid #52684f80;border-radius:6px;padding:5px 12px;color:var(--muted);font-size:11px;background:#16241c}
+.data-notes summary{cursor:pointer;color:var(--gold2);font-weight:700}
+.data-notes[open]{max-height:30%;overflow:auto}
+.data-notes .footer{padding:8px 0 2px;gap:14px;font-size:11px}
+@media(min-width:801px) and (max-height:750px){
+ .wardrobe-view .figure-foot{font-size:11px;padding:7px 12px 9px}
+ .wardrobe-view .browse .controls{padding:7px 12px}
+ .wardrobe-view .browse .search{padding:7px 9px}
+ .wardrobe-view .browse .heading{min-height:41px;padding:6px 12px}
+ .data-view .editor-intro{padding:9px 12px}
+ .data-view .editor-intro p{margin-top:2px}
+}
+/* Small/narrow screens fall back to stacked cards with page scrolling,
+   because two full body-height panels cannot both fit vertically. */
+@media(max-width:800px){
+ html,body{height:auto;min-height:100%;overflow:auto;overscroll-behavior:auto}
+ .shell{height:auto;max-height:none;min-height:100dvh;overflow:visible;padding:10px}
+ .wardrobe-view,.data-view{flex:0 0 auto;overflow:visible;min-height:0}
+ .wardrobe-view{display:block}
+ .wardrobe-view .main{display:flex;flex:0 0 auto;flex-direction:column;gap:12px;min-height:0;height:auto}
+ .wardrobe-view .main>.card{height:auto;min-height:0;max-height:none}
+ .wardrobe-view .figure-area{flex:none;min-height:0;height:min(62vh,550px);overflow:hidden}
+ .wardrobe-view .figure-svg{height:100%;max-height:100%}
+ .wardrobe-view .main>.browse{height:min(70vh,630px);min-height:350px;max-height:none}
+ .data-view .editor{min-height:0;flex:0 0 auto}
+ .data-view .editor-content{flex:0 0 auto;min-height:270px;height:min(58vh,700px)}
+ .data-head{align-items:flex-start}
+}
+@media(max-width:480px){
+ .header-tools{gap:5px;flex-wrap:nowrap}
+ .view-switch{font-size:10px;padding:6px}
+ .top h1{font-size:20px}
+ .data-head h2{font-size:21px}
+ .data-head .primary{font-size:11px;padding:7px 9px;white-space:nowrap}
+ .data-view .toolbar{padding:9px}
+ .data-view .editor-intro{padding:9px}
+}
+
+
+/* v11 — Catalog title lives alongside the application title, and the top
+   navigation control toggles between both views.  The freed vertical room is
+   allocated to the CSV table by the existing flex-column data editor. */
+.top .catalog-header{display:flex;flex:0 0 auto;flex-direction:column;justify-content:center;gap:3px;min-width:135px;max-width:260px;border-left:1px solid #71836d77;padding:3px 0 3px 20px;margin-left:3px}
+.top .catalog-header .eyebrow{font-size:10px;letter-spacing:1.5px}
+.top .catalog-header .catalog-title{font:normal 24px/1.15 Georgia,'Times New Roman',serif;color:var(--text)}
+.top .header-tools{margin-left:auto}
+.top .view-switch{min-width:115px;text-align:center}
+.data-view{padding-top:6px;gap:8px}
+@media(min-width:801px) and (max-width:1250px){
+ .top .catalog-header{min-width:112px;padding-left:11px;margin-left:0}
+ .top .catalog-header .catalog-title{font-size:20px}
+ .top .header-tools{gap:7px}
+}
+@media(max-width:800px){
+ .top{flex-wrap:wrap}
+ .top .catalog-header{margin-left:auto;padding-left:12px;min-width:115px}
+ .top .catalog-header .catalog-title{font-size:21px}
+ .top .header-tools{width:100%;justify-content:flex-end}
+}
+@media(max-width:480px){
+ .top .catalog-header{min-width:0;max-width:100%;padding:3px 0 3px 10px}
+ .top .catalog-header .eyebrow{font-size:9px;letter-spacing:.8px}
+ .top .catalog-header .catalog-title{font-size:19px}
+ .top .view-switch{min-width:85px}
+}
+
+/* v12 — Export Equipped appears at lower-left without taking away figure space. */
+.figure-foot{display:flex;align-items:center;gap:14px;position:relative;padding:9px 13px 10px}
+.figure-foot .wearer-footer-copy{flex:1;min-width:0;text-align:center}
+.figure-foot .export-equipped-menu{position:relative;flex:0 0 auto;text-align:left;align-self:center;z-index:3}
+.figure-foot .export-equipped-menu>summary{list-style:none;white-space:nowrap;border:1px solid #d2b274;border-radius:6px;background:#23382a;color:#f3dba8;padding:7px 10px;font-weight:bold;font-size:11px;cursor:pointer}
+.figure-foot .export-equipped-menu>summary::-webkit-details-marker{display:none}
+.figure-foot .export-equipped-menu>summary:hover,.figure-foot .export-equipped-menu[open]>summary{background:#354a35;border-color:#f3dba8}
+.figure-foot .export-equipped-options{position:absolute;bottom:calc(100% + 7px);left:0;width:168px;background:#18271f;border:1px solid #ba9c65;border-radius:8px;padding:6px;box-shadow:0 12px 24px #000a;display:flex;flex-direction:column;gap:4px}
+.figure-foot .export-equipped-options button{display:block;text-align:left;width:100%;padding:9px;border:1px solid transparent;background:transparent;color:#f0e4cc;font-size:12px;margin:0}
+.figure-foot .export-equipped-options button:hover{border-color:#b99e6e;background:#2f4232}
+@media(max-width:1050px){.figure-foot{gap:6px}.figure-foot .export-equipped-menu>summary{padding:7px 6px;font-size:10px}.figure-foot .wearer-footer-copy{font-size:10px}}
+@media(max-width:480px){.figure-foot{align-items:flex-start;flex-wrap:wrap}.figure-foot .wearer-footer-copy{text-align:left;flex-basis:100%}}
+/* Version 13: Fingers is a single subsection of Hands; no per-finger tracking. */
+.anatomy [data-zone="fingers"] .spot{fill:#bfa16a5e;stroke:#e3c284;stroke-width:2.3}
+.anatomy [data-zone="fingers"].equipped .spot{fill:#14345b;stroke:#edc778;stroke-width:2.5}
+.editor-content .table{min-width:980px}
+
+/* v14 — simplified front-facing mannequin, with selectable cape behind. */
+.figure-svg .body-etch{fill:#294034;stroke:#d3d1b7;stroke-width:1.65;stroke-linejoin:round;stroke-linecap:round}
+.figure-svg .body-detail{fill:none;stroke:#b7c3ae;stroke-opacity:.58;stroke-width:1.35;stroke-linecap:round}
+.figure-svg .cape-anatomy .cape-spot{fill:url(#capeCloth);fill-opacity:1;stroke:#94a98b;stroke-width:1.8}
+.figure-svg .cape-anatomy .cape-fold{stroke:#aeb8a0;stroke-opacity:.45;stroke-width:1.2;fill:none;pointer-events:none}
+.figure-svg .cape-anatomy [data-zone].active .spot,.figure-svg .cape-anatomy [data-zone]:hover .spot,.figure-svg .cape-anatomy [data-zone]:focus .spot{fill:#957645;fill-opacity:.85;stroke:#ffe3a0;stroke-width:2.5}
+.figure-svg .cape-anatomy [data-zone].equipped .spot,.figure-svg .cape-anatomy [data-zone].equipped.active .spot,.figure-svg .cape-anatomy [data-zone].equipped:hover .spot,.figure-svg .cape-anatomy [data-zone].equipped:focus .spot{fill:#14345b;fill-opacity:1;stroke:#edc778;stroke-width:2.5}
+/* Deleting a single item from its details card does not disturb the other actions. */
+.item-detail-dialog #detailDelete{margin-right:auto}
+.item-detail-dialog .detail-ddb-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;white-space:nowrap;padding:9px 12px;border:1px solid var(--line);border-radius:7px;font-size:12px;color:var(--gold)}
+@media(max-width:500px){.item-detail-dialog .modal-actions{gap:6px}.item-detail-dialog .modal-actions button{padding:9px 11px}}
+
+/* v16 — Resizable Database Editor column boundaries. The left-edge grips
+   alter the widths of both neighboring columns without changing CSV data. */
+.editor-content .table{table-layout:fixed;min-width:0;border-collapse:separate;border-spacing:0}
+.editor-content .table th,.editor-content .table td{box-sizing:border-box;min-width:0}
+.editor-content .table th{position:sticky;top:0;white-space:nowrap;overflow:visible;padding-right:8px}
+.editor-content .table td{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.editor-content .table .select-cell{width:auto;padding-left:7px;padding-right:7px;text-align:center}
+.editor-content .table .description-cell{min-width:0;max-width:none;white-space:nowrap;text-overflow:ellipsis}
+.editor-content .table .editor-location-cell{min-width:0}
+.editor-content .table .editor-location-select{width:100%;min-width:0;max-width:100%;font-size:12px}
+.editor-content .table td.editor-actions-cell{overflow:visible;white-space:nowrap}
+.editor-row-actions{display:flex;align-items:center;justify-content:flex-start;gap:6px}
+.editor-row-actions .small-btn{padding:5px 8px;font-size:11px}
+.editor-content .table th .column-grip{position:absolute;left:-7px;top:0;bottom:0;width:14px;z-index:4;cursor:col-resize;touch-action:none;user-select:none}
+.editor-content .table th .column-grip:after{content:'';position:absolute;left:6px;top:25%;bottom:25%;border-left:2px solid #b4a477;opacity:.55;transition:opacity .1s,border-color .1s}
+.editor-content .table th .column-grip:hover:after,
+.editor-content .table th .column-grip:focus-visible:after,
+.editor-content .table th .column-grip.is-dragging:after{border-color:#f5d69a;opacity:1}
+.editor-content .table th .column-grip:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+body.editor-resizing,body.editor-resizing *{cursor:col-resize!important;user-select:none!important}
+.editor-head-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.editor-reset-widths{font-size:11px;padding:5px 9px;white-space:nowrap}
+@media(max-width:800px){.editor-head-tools{gap:5px}.editor-reset-widths{padding:4px 7px}}
+
+
+/* v17 — Three mutually exclusive sort controls in the Database Editor header. */
+.editor-sort-heading{display:flex;align-items:center;justify-content:space-between;gap:4px;min-width:0;width:100%}
+.editor-sort-heading .sort-heading-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.editor-sort-buttons{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto}
+.editor-sort-button{width:17px;height:19px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:1px solid transparent;border-radius:4px;background:transparent;color:#b1bea8;font:700 11px/1 Arial,sans-serif;cursor:pointer;letter-spacing:0;text-transform:none}
+.editor-sort-button:hover,.editor-sort-button:focus-visible{border-color:#b6a075;color:#ffe2a4;background:#3c4934;outline:none}
+.editor-sort-button[aria-pressed="true"]{border-color:#cba76b;background:#4b472e;color:#ffe1a0;box-shadow:inset 0 0 0 1px #6b613e}
+.editor-content .table th:has(.editor-sort-heading){padding-left:9px;padding-right:6px}
+@media(max-width:800px){.editor-sort-button{width:16px;height:19px}.editor-sort-heading{gap:2px}}
+
+
+/* v19 — Database viewer-only text magnification; stable column widths. */
+.editor-text-size{display:flex;align-items:center;gap:7px;white-space:nowrap;color:var(--gold2);font-size:11px;font-weight:700;letter-spacing:.05em}
+.editor-text-size select{min-width:78px;padding:6px 8px;background:#1c3025;border:1px solid #708369;border-radius:5px;color:var(--text);font-size:12px;cursor:pointer}
+.editor-text-size select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.editor-content .table tbody tr{height:50px}
+.editor-content .table tbody td{height:50px;max-height:50px;padding-top:0;padding-bottom:0}
+.editor-content .table td.editor-text-cell{position:relative}
+.editor-content .table td .editor-cell-text{
+ position:absolute;left:12px;right:12px;top:50%;transform:translateY(-50%);
+ display:block;max-width:calc(100% - 24px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+ font-size:var(--editor-row-font-size,12px);line-height:1.05;
+}
+@media(max-width:800px){.editor-text-size{gap:4px;font-size:10px}.editor-text-size select{padding:5px 6px;min-width:69px}}
+
+/* v21 — Table rows follow the viewer text magnification, while table columns
+   fit the available width. Long text is still clipped horizontally. */
+.editor-content .table tbody tr{height:var(--editor-row-height,50px)}
+.editor-content .table tbody td{height:var(--editor-row-height,50px);max-height:none;padding-top:0;padding-bottom:0}
+.editor-content .table td .editor-cell-text{line-height:1.15}
+
+
+/* v24 — Larger, finger-friendly collection action buttons.
+   Actions occupy approximately 90% of the item row's height; only the
+   item text remains flexible. This applies at all desktop display profiles. */
+.item-grid .item{
+  min-height:60px;
+  padding-block:1px !important;
+  gap:8px;
+}
+.item-grid .item-actions{
+  align-self:stretch;
+  align-items:stretch;
+  margin-block:1px;
+  gap:5px;
+}
+.item-grid .item-actions > button{
+  height:auto !important;
+  min-height:0;
+  align-self:stretch;
+  line-height:1;
+  border-radius:6px;
+}
+.item-grid .item-actions > .iconbtn{
+  min-width:42px;
+  padding:0 8px;
+  font-size:21px;
+}
+.item-grid .item-actions > .equip-btn{
+  min-width:64px;
+  padding:0 10px;
+  font-size:12px;
+  font-weight:700;
+}
+.item-grid .item-actions > button:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+@media(min-width:2000px){
+ .item-grid .item{min-height:66px;padding-block:1px !important}
+ .item-grid .item-actions > .iconbtn{min-width:49px;font-size:24px}
+ .item-grid .item-actions > .equip-btn{min-width:78px;font-size:14px}
+}
+@media(min-width:3300px){
+ .item-grid .item{min-height:82px;padding-block:1px !important}
+ .item-grid .item-actions > .iconbtn{min-width:60px;font-size:28px}
+ .item-grid .item-actions > .equip-btn{min-width:92px;font-size:16px}
+}
+@media(max-width:500px){
+ .item-grid .item{min-height:58px;gap:4px;padding-inline:5px}
+ .item-grid .item-actions{gap:3px}
+ .item-grid .item-actions > .iconbtn{min-width:35px;font-size:18px;padding-inline:5px}
+ .item-grid .item-actions > .equip-btn{min-width:52px;font-size:10px;padding-inline:5px}
+}
+
+
+/* v25 — Scale the Collection's two text lines up into the space made available
+   by the enlarged buttons, without making rows unnecessarily taller. */
+.wardrobe-view .item-grid .item-main{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-width:0;
+  overflow:hidden;
+}
+.wardrobe-view .item-grid .item-name{
+  font-size:20px;
+  line-height:1.12;
+  margin-bottom:3px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  min-width:0;
+}
+.wardrobe-view .item-grid .item-meta{
+  font-size:14px;
+  line-height:1.16;
+  gap:7px;
+  min-width:0;
+}
+.wardrobe-view .item-grid .attune-label{
+  font-size:12px;
+  line-height:1.16;
+  padding:2px 5px;
+}
+@media(min-width:2000px){
+  .wardrobe-view .item-grid .item-name{font-size:23px;line-height:1.13}
+  .wardrobe-view .item-grid .item-meta{font-size:16px}
+  .wardrobe-view .item-grid .attune-label{font-size:14px}
+}
+@media(min-width:3300px){
+  .wardrobe-view .item-grid .item-name{font-size:31px;line-height:1.13;margin-bottom:4px}
+  .wardrobe-view .item-grid .item-meta{font-size:21px}
+  .wardrobe-view .item-grid .attune-label{font-size:18px;padding:3px 7px}
+}
+@media(max-width:500px){
+  .wardrobe-view .item-grid .item-name{font-size:16px;line-height:1.14;margin-bottom:2px}
+  .wardrobe-view .item-grid .item-meta{font-size:11px;gap:4px}
+  .wardrobe-view .item-grid .attune-label{font-size:10px;padding:1px 3px}
+}
+
+
+/* v26 — In-app Equipped List, at the right end of The Wearer footer. */
+.figure-foot .equipped-list-trigger{
+ flex:0 0 auto;align-self:center;margin:0;padding:7px 12px;
+ border:1px solid #d2b274;border-radius:6px;background:#23382a;
+ color:#f3dba8;font-size:11px;line-height:1.4;font-weight:700;white-space:nowrap;
+}
+.figure-foot .equipped-list-trigger:hover{background:#354a35;border-color:#f3dba8}
+.equipped-list-dialog{max-width:660px;max-height:min(86vh,870px);display:flex;flex-direction:column;overflow:hidden}
+.equipped-list-dialog h3{margin:2px 0 4px;font-size:28px}
+.equipped-list-dialog .equipped-list-subtitle{font-size:12px;color:#b5c6b4;margin:0 0 12px}
+.equipped-list-dialog .equipped-list-scroll{min-height:0;overflow-y:auto;padding:2px 3px 4px 0;scrollbar-color:#738a6d #192920}
+.equipped-list-dialog .equipped-location{border:1px solid #4c6550;border-radius:7px;background:#192b22;margin:0 0 9px;padding:10px 13px}
+.equipped-list-dialog .equipped-location-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:1px solid #526b54;padding:0 0 6px;margin:0 0 7px}
+.equipped-list-dialog .equipped-location-heading h4{font:700 12px/1.4 Arial,sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin:0}
+.equipped-list-dialog .equipped-location-heading span{font-size:11px;color:#bbc8b4;white-space:nowrap}
+.equipped-list-dialog .equipped-location ul{padding:0 0 0 19px;margin:0;color:var(--text)}
+.equipped-list-dialog .equipped-location li{padding:3px 0;line-height:1.4;overflow-wrap:anywhere;font-size:14px}
+.equipped-list-dialog .equipped-empty{color:var(--muted);text-align:center;padding:25px 12px 16px}
+.equipped-list-dialog .modal-actions{margin-top:13px;padding-top:12px;border-top:1px solid #526b54}
+@media(max-width:560px){
+ .figure-foot{flex-wrap:wrap;justify-content:space-between}
+ .figure-foot .export-equipped-menu{order:1}
+ .figure-foot .equipped-list-trigger{order:2}
+ .figure-foot .wearer-footer-copy{order:3;flex:0 0 100%;text-align:center}
+ .equipped-list-dialog{padding:15px;max-height:90vh}
+}
+
+/* v27: compact Data/CSV. Live status moves into the top title bar;
+   Import/Export are alongside 03 / Database Editor, not a separate card. */
+.top .catalog-header{
+ display:flex; flex:1 1 auto; flex-direction:row; align-items:center;
+ gap:13px; min-width:0; max-width:none; padding:2px 0 2px 15px;
+ margin-left:0;
+}
+.top .catalog-heading{display:flex;flex:0 0 auto;flex-direction:column;justify-content:center;gap:1px}
+.top .catalog-header .catalog-title{font-size:21px;line-height:1.05}
+.top .catalog-activity{display:flex;min-width:0;max-width:420px;flex:1 1 290px;flex-direction:column;justify-content:center;gap:1px;
+ border-left:1px solid #52684f88;padding-left:13px}
+.top .catalog-activity .toolbar-status{font-size:11px;line-height:1.2;white-space:normal}
+.top .catalog-activity .toolbar-hint{font-size:10px;line-height:1.22;margin:0;color:var(--muted)}
+.data-view{padding-top:5px;gap:0}
+.data-view .editor{margin:0}
+.data-view .editor>.cardhead{padding:9px 14px;gap:9px;min-height:56px}
+.editor-head-start{display:flex;flex:1 1 auto;align-items:center;gap:11px;min-width:0;flex-wrap:wrap}
+.editor-head-start .cardtitle{flex:0 0 auto;white-space:nowrap;font-size:11px}
+.editor-file-actions{display:flex;align-items:center;gap:7px;flex:0 0 auto}
+.editor-file-actions .ghost,.editor-file-actions .primary{padding:7px 10px;font-size:11px;white-space:nowrap;line-height:1.25}
+.editor-row-summary{font-size:10px;color:var(--muted);min-width:0;white-space:nowrap;font-variant-numeric:tabular-nums}
+.data-view .editor-head-tools{flex:0 0 auto;gap:10px;flex-wrap:nowrap}
+.data-view .editor-intro{padding:7px 13px;gap:0;border-bottom:1px solid #52684f7a}
+.data-view .editor-tools{width:100%;flex-wrap:nowrap;gap:7px}
+.data-view .editor-tools .search{min-width:110px;flex:1 1 240px;padding:7px 10px;font-size:12px;max-width:none}
+.data-view .editor-tools select{min-width:105px;max-width:none;flex:1 1 145px;padding:7px 8px;font-size:12px}
+.data-view .editor-tools button{padding:7px 10px;font-size:11px;white-space:nowrap;flex:0 0 auto}
+.data-view .editor-content{flex:1 1 0;min-height:0;max-height:none}
+@media(max-width:1450px){
+ .top .catalog-activity{max-width:335px}
+ .top .catalog-activity .toolbar-hint{font-size:9px}
+ .editor-row-summary{display:none}
+}
+@media(max-width:1100px){
+ .top .catalog-header{gap:8px;padding-left:9px}
+ .top .catalog-header .catalog-title{font-size:18px}
+ .top .catalog-activity{padding-left:9px;max-width:270px}
+ .top .catalog-activity .toolbar-hint{display:none}
+ .data-view .editor>.cardhead{flex-wrap:wrap}
+ .data-view .editor-head-tools{margin-left:auto}
+ .data-view .editor-tools{flex-wrap:wrap}
+ .data-view .editor-tools .search{flex:1 1 210px}
+}
+@media(max-width:800px){
+ .top .catalog-header{flex:1 1 280px;max-width:none;margin-left:0}
+ .top .catalog-activity{min-width:95px;max-width:none}
+ .top .catalog-activity .toolbar-status{font-size:10px}
+ .data-view .editor>.cardhead{padding:8px 10px}
+ .data-view .editor-intro{padding:7px 10px}
+ .data-view .editor-tools{flex-wrap:wrap}
+ .data-view .editor-tools .search{flex:1 1 220px}
+ .data-view .editor-tools select{flex:1 1 125px}
+ .data-view .editor-content{flex:0 0 auto;min-height:270px;height:min(58vh,700px);overflow:auto}
+}
+@media(max-width:480px){
+ .top .catalog-header{min-width:0;max-width:none;padding:3px 0 3px 7px;gap:7px}
+ .top .catalog-header .catalog-title{font-size:17px}
+ .top .catalog-activity{padding-left:7px}
+ .top .catalog-activity .toolbar-status{font-size:9px}
+ .editor-head-start{gap:7px}
+ .editor-head-start .cardtitle{font-size:10px}
+ .editor-file-actions{gap:4px}
+ .editor-file-actions .ghost,.editor-file-actions .primary{padding:6px 7px;font-size:10px}
+ .data-view .editor-head-tools{width:100%;justify-content:flex-end}
+}
+
+
+/* v29: D&D Beyond character equipment comparison: independent of CSV edits. */
+.character-dialog{max-width:880px;max-height:min(94vh,960px);display:flex;flex-direction:column;gap:9px;overflow:hidden}
+.character-dialog .detail-heading{flex-shrink:0}
+.character-dialog h3{margin:0;font-size:26px}
+.character-dialog .character-help{font-size:12px;line-height:1.5;color:var(--muted);margin:0}
+.character-inputs{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.character-inputs input{flex:1 1 340px;min-width:150px;border:1px solid var(--line);background:#102118;color:var(--text);border-radius:6px;padding:11px;font-size:13px}
+.character-inputs button,.character-actions button{flex-shrink:0}
+.character-import-json{width:100%;resize:vertical;min-height:65px;max-height:160px;border:1px solid #536b57;border-radius:6px;background:#0f2018;color:var(--text);padding:9px;font:12px/1.5 Consolas,monospace}
+.character-json-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.character-status{font-size:12px;color:var(--muted);line-height:1.45;margin:0;min-height:16px}
+.character-results{overflow:auto;flex:1;min-height:0;display:grid;gap:11px;padding:2px 4px 5px 0}
+#modalScrim.character-add-front{z-index:75}
+.character-result-row{align-items:center}
+.character-result-text{min-width:0;flex:1 1 auto;display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.character-result-controls{display:flex;align-items:center;gap:7px;flex:0 0 auto}
+.character-result-controls .ghost{font-size:12px;padding:7px 11px;white-space:nowrap;border-color:#bfa26c;color:#f2d295}
+.character-result-controls .ghost:hover{background:#34513e}
+.character-result-addable{align-items:center}
+.character-result-addable .character-result-controls button{min-height:34px;font-weight:700;background:#2c4334;border-color:#d0ae6c;color:#f7d9a0}
+.character-result-addable .character-result-controls button:focus-visible{outline:2px solid #f1ce87;outline-offset:3px}
+.character-result-addable .character-result-text small{font-size:11px;color:#c1cdbf}
+@media(max-width:650px){.character-result-row{align-items:stretch;flex-wrap:wrap}.character-result-controls{width:100%;justify-content:flex-end}}
+
+.character-group{padding:12px 13px;border:1px solid #4d6c55;border-radius:8px;background:#172a21}
+.character-group h4{margin:0 0 8px;font:700 12px Arial,sans-serif;color:var(--gold);letter-spacing:.8px;text-transform:uppercase}
+.character-result-row{font-size:13px;display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:5px 0;border-top:1px solid #3c5544}
+.character-result-row small{font-size:11px;color:#b0bead;text-align:right}
+.character-empty{color:var(--muted);font-size:12px;line-height:1.6}
+.character-actions{border-top:1px solid #4f6553;padding-top:10px;display:flex;justify-content:space-between;align-items:center;gap:9px;flex-wrap:wrap}
+.character-actions .right{display:flex;gap:8px}
+@media(max-width:650px){.character-dialog{padding:13px;max-height:96vh}.character-import-json{min-height:56px}.character-inputs{gap:6px}.character-result-row{display:block}.character-result-row small{display:block;text-align:left}}
+
+/* v33 — creator credit and Discord community link beneath the title. */
+.brand-copy{min-width:0}
+.brand-credits{display:flex;align-items:baseline;flex-wrap:wrap;column-gap:7px;row-gap:0;
+  margin:2px 0;color:var(--muted);font-size:11px;line-height:1.2}
+.brand-credits .credit-separator{color:#c4ac7a}
+.brand-credits a{color:var(--gold2);text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere}
+.brand-credits a:hover{color:#fff0c4}
+.brand-credits a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media(min-width:3300px){.brand-credits{font-size:14px}}
+@media(max-width:480px){.brand-credits{font-size:10px;column-gap:5px}.brand-credits .credit-separator{display:none}}
+
+/* v34 — Uniform location buttons, and a separate selectable pouch beside the mannequin. */
+.figure-area .side-buttons{
+  width:clamp(110px,18%,232px);
+  max-width:calc(50% - 58px);
+  align-items:stretch;
+}
+.figure-area .side-buttons.right{align-items:stretch}
+.figure-area .side-buttons .zone-btn,
+.figure-area .side-buttons .zone-btn.subzone{
+  display:flex;
+  width:100%;
+  min-width:0;
+  max-width:none;
+  margin-left:0;
+  padding-inline:8px;
+  align-items:center;
+  justify-content:space-between;
+  gap:5px;
+  font-size:12px;
+  white-space:nowrap;
+}
+.figure-area .side-buttons .zone-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.figure-area .side-buttons .zone-btn.subzone{border-left:3px solid #b59a64}
+.figure-area .side-buttons .zone-btn em{flex:0 0 auto;margin-left:auto}
+.figure-svg .pouch-detail{fill:none;stroke:#d0bd92;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.figure-svg .pouch-stitch{fill:none;stroke:#879b81;stroke-width:1.2;stroke-opacity:.8;pointer-events:none}
+.figure-svg [data-zone="containers"]:hover .pouch-detail,
+.figure-svg [data-zone="containers"].active .pouch-detail,
+.figure-svg [data-zone="containers"].equipped .pouch-detail{stroke:#f5daa0}
+.bottom-bar #clearEquippedBtn{
+  margin:0;
+  border:1px solid #a88961;
+  border-radius:6px;
+  padding:9px 12px;
+  background:#26352c;
+  color:#f3d6a1;
+  font-size:12px;
+  font-weight:700;
+}
+.bottom-bar #clearEquippedBtn:hover:not(:disabled){background:#3c4533;border-color:#f2d8a1}
+@media(max-width:800px){
+ .figure-area .side-buttons{width:clamp(74px,21%,120px);max-width:calc(50% - 44px)}
+ .figure-area .side-buttons .zone-btn,.figure-area .side-buttons .zone-btn.subzone{padding-inline:5px;font-size:10px}
+}
+@media(max-width:480px){
+ .figure-area .side-buttons{width:clamp(70px,23%,95px);max-width:calc(50% - 36px)}
+ .figure-area .side-buttons .zone-btn,.figure-area .side-buttons .zone-btn.subzone{font-size:9px;padding-inline:4px}
+ .bottom-bar #clearEquippedBtn{font-size:11px;padding:8px 9px}
+}
+/* v35 — Match Collection footer to Wearer footer, and compact temporary PDF build selector. */
+.wardrobe-view .browse .bottom-bar{
+ height:var(--wearer-footer-height,55px);min-height:0;padding:4px 13px;
+ box-sizing:border-box;flex:0 0 auto;
+}
+.wardrobe-view .browse .bottom-bar #clearEquippedBtn{padding:6px 10px}
+.wardrobe-view .browse .bottom-bar .primary{padding:7px 11px}
+.build-session{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+ background:#172c24;border-bottom:1px solid #52684f7a;padding:6px 13px;color:var(--muted);font-size:11px}
+.build-session .build-session-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.build-session .build-session-actions button{font-size:11px;padding:5px 9px}
+.build-session .build-session-actions button[aria-pressed="true"]{background:#3c4731;border-color:var(--gold);color:var(--gold2)}
+.data-view .editor>.build-session{flex:0 0 auto}
+@media(max-width:650px){.build-session{padding:6px 9px}.build-session .build-session-actions button{padding:5px 6px}}
+
+/* v36 — Collection-wide catalog view and independent, row-aware text scaling. */
+.collection-text-size{display:flex;align-items:center;gap:7px;white-space:nowrap;color:var(--gold2);font-size:11px;font-weight:700;letter-spacing:.05em}
+.collection-text-size select{min-width:78px;padding:6px 8px;background:#1c3025;border:1px solid #708369;border-radius:5px;color:var(--text);font-size:12px;cursor:pointer}
+.collection-text-size select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.wardrobe-view .item-grid{--collection-name-base:20px;--collection-meta-base:14px;--collection-attune-base:12px;--collection-row-base:60px;--collection-text-scale:1}
+.wardrobe-view .item-grid .item{min-height:max(40px,calc(var(--collection-row-base) * var(--collection-text-scale)));}
+.wardrobe-view .item-grid .item-name{font-size:calc(var(--collection-name-base) * var(--collection-text-scale));}
+.wardrobe-view .item-grid .item-meta{font-size:calc(var(--collection-meta-base) * var(--collection-text-scale));}
+.wardrobe-view .item-grid .attune-label{font-size:calc(var(--collection-attune-base) * var(--collection-text-scale));}
+.wardrobe-view .bottom-bar #viewAllBtn[aria-pressed="true"]{border-color:#ffe5a2;box-shadow:inset 0 0 0 1px #ffe5a2;color:#17261b;background:#f0ca86}
+@media(min-width:2000px){.wardrobe-view .item-grid{--collection-name-base:23px;--collection-meta-base:16px;--collection-attune-base:14px;--collection-row-base:66px}}
+@media(min-width:3300px){.wardrobe-view .item-grid{--collection-name-base:31px;--collection-meta-base:21px;--collection-attune-base:18px;--collection-row-base:82px}}
+@media(max-width:500px){.wardrobe-view .item-grid{--collection-name-base:16px;--collection-meta-base:11px;--collection-attune-base:10px;--collection-row-base:58px}.collection-text-size{gap:4px;font-size:10px}.collection-text-size select{min-width:69px;padding:5px 6px}}
+
+/* v37 — The CSV editor row fits its tallest element, with exactly 5px of
+   vertical cell padding. Controls inherit the same user-selected text size. */
+.editor-content .table tbody tr{height:auto}
+.editor-content .table tbody td{
+  height:auto;max-height:none;padding-top:5px;padding-bottom:5px;
+  vertical-align:middle;
+}
+.editor-content .table td .editor-cell-text{
+  position:static;top:auto;right:auto;left:auto;transform:none;
+  max-width:100%;width:100%;display:block;
+  font-size:var(--editor-row-font-size,12px);line-height:1.25;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.editor-content .table .editor-location-select{
+  font-size:var(--editor-row-font-size,12px);
+  line-height:1.25;padding:5px 8px;min-height:0;
+}
+.editor-content .table .editor-row-actions .small-btn{
+  font-size:var(--editor-row-font-size,12px);
+  line-height:1.25;padding:5px 8px;min-height:0;
+}
+
+/* v37 — The Search & Filters strip uses the same readable type size as the
+   Database Editor column headings, including both action buttons. */
+.data-view .editor{--editor-header-font-size:14px}
+.data-view .editor-content .table thead th{font-size:var(--editor-header-font-size)}
+.data-view .editor-tools .search,
+.data-view .editor-tools select,
+.data-view .editor-tools button{
+  font-size:var(--editor-header-font-size);
+  line-height:1.3;
+}
+.data-view .editor-tools .search{padding:8px 12px}
+.data-view .editor-tools select{padding:8px 10px}
+.data-view .editor-tools button{padding:8px 12px}
+/* At high editor-text zoom, keep the larger Edit/Delete controls reachable
+   inside the resizable Actions column instead of letting them overlap cells. */
+.editor-content .table .editor-row-actions{flex-wrap:nowrap;width:max-content}
+.editor-content .table tbody td.select-cell{line-height:0}
+.editor-content .table tbody td.select-cell input{margin:0;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="top"><div class="brand"><div class="brandmark" aria-hidden="true">✧</div><div class="brand-copy"><h1>The Arcane Wardrobe</h1><div class="brand-credits"><span>by aether_tech &amp; chatgpt</span><span class="credit-separator" aria-hidden="true">·</span><a href="https://discord.gg/3MpW3Wq6ps" target="_blank" rel="noopener noreferrer">aether_tech's D&amp;D Lore and Apps Discord</a></div><p class="sub">Explore, equip, and organize items.</p></div></div><div class="catalog-header" id="catalogHeader" aria-label="Catalog management" hidden><div class="catalog-heading"><span class="eyebrow">Catalog management</span><span class="catalog-title">Data / CSV</span></div><div class="catalog-activity" role="status" aria-live="polite"><span class="toolbar-status" id="storageStatus">Checking catalog…</span><span class="toolbar-hint" id="storageHint">Edits remain in this browser tab · Export Edited CSV to save · Drop CSV to import</span></div></div><div class="header-tools"><label class="display-choice" for="displayMode"><span>SCREEN LAYOUT</span><select id="displayMode" aria-label="Screen layout profile"><option value="auto">Auto</option><option value="1080p">1080p · 1920 × 1080</option><option value="1440p">1440p · 2560 × 1440</option><option value="4k">4K · 3840 × 2160</option></select></label><button class="ghost view-switch" id="openDataTab" type="button" aria-controls="dataView wardrobeView" aria-pressed="false" aria-label="Open Data / CSV">Data / CSV</button><div class="count" id="totalCount">0 items indexed</div></div></header>
+
+<div id="wardrobeView" class="wardrobe-view" role="region" aria-label="Wardrobe view"><main class="main">
+<section class="card" aria-label="Interactive wearer body map"><div class="cardhead"><h2 class="cardtitle">01 / The wearer</h2><span class="hint">Hover to browse · click to lock/unlock</span></div><div class="figure-area"><div class="side-buttons" id="leftZones"></div>
+<svg class="figure-svg" viewBox="0 0 400 690" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Simple front-facing mannequin with selectable body regions and cape behind it">
+ <defs>
+  <linearGradient id="capeCloth" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#304f43"/><stop offset="1" stop-color="#1b342c"/></linearGradient>
+ </defs>
+ <!-- The cape is visually behind the figure and IS the Back region. -->
+ <g class="anatomy cape-anatomy">
+   <g data-zone="back" tabindex="0" role="button" aria-label="Back: select a full-width cape and back-carried magic items">
+   <!-- One continuous cloak extends behind BOTH legs, filling the center and side gaps. -->
+   <path class="spot cape-spot" d="M163 160 C136 165 120 186 115 223 C100 315 95 463 76 559 Q92 574 117 577 Q135 579 151 567 Q200 578 249 567 Q265 579 283 577 Q308 574 324 559 C305 463 300 315 285 223 C280 186 264 165 237 160 Q200 177 163 160 Z"/>
+   <path class="cape-fold" fill="none" stroke="#aeb8a0" stroke-opacity=".45" stroke-width="1.2" d="M131 215 Q117 377 104 544 M269 215 Q283 377 296 544 M158 326 Q146 456 132 555 M242 326 Q254 456 268 555 M200 355 Q196 458 200 560"/>
+  </g>
+ </g>
+ <!-- Minimal front-facing 2D mannequin; artwork does not intercept clicks. -->
+ <g class="silhouette" pointer-events="none" aria-hidden="true">
+  <path class="body-etch" d="M200 50 C180 50 168 65 167 88 C164 111 177 137 200 145 C223 137 236 111 233 88 C232 65 220 50 200 50Z"/>
+  <path class="body-etch" d="M181 135 L180 156 Q165 163 146 171 C133 178 131 193 137 213 L153 270 L154 342 C161 360 163 371 160 385 L240 385 C237 371 239 360 246 342 L247 270 L263 213 C269 193 267 178 254 171 Q235 163 220 156 L219 135 Q200 151 181 135Z"/>
+  <path class="body-etch" d="M144 174 C126 173 115 190 112 217 L115 268 L107 329 L105 380 Q109 393 121 393 L136 381 L145 328 L154 264 L150 201Z"/>
+  <path class="body-etch" d="M256 174 C274 173 285 190 288 217 L285 268 L293 329 L295 380 Q291 393 279 393 L264 381 L255 328 L246 264 L250 201Z"/>
+  <path class="body-etch" d="M106 379 L136 382 L139 421 Q135 441 122 446 Q106 446 104 432Z"/>
+  <path class="body-etch" d="M294 379 L264 382 L261 421 Q265 441 278 446 Q294 446 296 432Z"/>
+  <path class="body-etch" d="M160 376 Q179 386 200 387 L200 405 L194 475 L189 576 Q186 597 171 597 Q157 594 157 573 L148 459Z"/>
+  <path class="body-etch" d="M240 376 Q221 386 200 387 L200 405 L206 475 L211 576 Q214 597 229 597 Q243 594 243 573 L252 459Z"/>
+  <path class="body-etch" d="M157 570 Q167 578 189 576 L190 614 Q185 637 157 640 L141 637 C142 623 149 615 155 608Z"/>
+  <path class="body-etch" d="M243 570 Q233 578 211 576 L210 614 Q215 637 243 640 L259 637 C258 623 251 615 245 608Z"/>
+  <path class="body-detail" d="M178 99 Q200 108 222 99 M183 139 L186 151 M217 139 L214 151 M151 185 Q172 196 182 201 M249 185 Q228 196 218 201 M182 201 Q200 209 218 201 M200 219 L200 317 M153 341 Q200 351 247 341 M160 380 Q179 395 200 405 Q221 395 240 380 M157 460 Q164 473 180 471 M243 460 Q236 473 220 471 M155 530 Q168 540 187 531 M245 530 Q232 540 213 531"/>
+ </g>
+ <!-- Translucent zones exactly follow the simple anatomy. -->
+ <g class="anatomy">
+  <g data-zone="head" tabindex="0" role="button" aria-label="Head: hats, caps, helms and circlets"><path class="spot" d="M200 50 C180 50 168 65 167 88 C164 111 177 137 200 145 C223 137 236 111 233 88 C232 65 220 50 200 50Z"/></g>
+  <g data-zone="eyes" tabindex="0" role="button" aria-label="Eyes and face"><path class="spot" d="M168 94 Q200 85 232 94 L230 114 Q200 121 170 114Z"/></g>
+  <g data-zone="ears" tabindex="0" role="button" aria-label="Ears"><ellipse class="spot" cx="166" cy="107" rx="7" ry="15"/><ellipse class="spot" cx="234" cy="107" rx="7" ry="15"/></g>
+  <g data-zone="neck" tabindex="0" role="button" aria-label="Neck: necklaces and amulets"><path class="spot" d="M180 138 Q200 151 220 138 L224 167 Q200 185 176 167Z"/></g>
+  <g data-zone="shoulders" tabindex="0" role="button" aria-label="Shoulders: cloaks, capes and mantles"><path class="spot" d="M177 158 Q150 163 138 176 L135 206 Q153 218 174 209 Q200 229 226 209 Q247 218 265 206 L262 176 Q250 163 223 158 L200 179Z"/></g>
+  <g data-zone="arms" tabindex="0" role="button" aria-label="Arms: bracelets and bracers"><path class="spot" d="M138 206 L154 222 L151 263 L140 324 L133 383 L105 378 L108 326 L115 266 L112 226 Q114 208 138 206Z"/><path class="spot" d="M262 206 L246 222 L249 263 L260 324 L267 383 L295 378 L292 326 L285 266 L288 226 Q286 208 262 206Z"/></g>
+  <g data-zone="hands" tabindex="0" role="button" aria-label="Hands: gloves and gauntlets"><path class="spot" d="M105 379 L136 382 L139 421 Q135 441 122 446 Q106 446 104 432Z"/><path class="spot" d="M295 379 L264 382 L261 421 Q265 441 278 446 Q294 446 296 432Z"/></g>
+  <g data-zone="fingers" tabindex="0" role="button" aria-label="Fingers: one group for all equipped rings"><ellipse class="spot" cx="120" cy="430" rx="9" ry="11"/><ellipse class="spot" cx="280" cy="430" rx="9" ry="11"/></g>
+  <g data-zone="torso" tabindex="0" role="button" aria-label="Chest and torso: robes and clothing"><path class="spot" d="M156 217 Q179 234 200 226 Q221 234 244 217 L246 342 L154 342Z"/></g>
+  <g data-zone="charms" tabindex="0" role="button" aria-label="Charms, pins, and baubles"><circle class="spot charm-spot" cx="229" cy="258" r="15"/><text class="figure-label" x="229" y="263" text-anchor="middle" style="font-size:13px">✦</text></g>
+  <g data-zone="waist" tabindex="0" role="button" aria-label="Waist: belts and girdles"><path class="spot" d="M154 342 L246 342 L240 384 Q219 394 200 405 Q181 394 160 384Z"/></g>
+  <g data-zone="legs" tabindex="0" role="button" aria-label="Legs: trousers, leggings, and greaves"><path class="spot" d="M160 383 Q179 392 200 405 L194 475 L189 575 Q173 594 157 573 L148 459Z"/><path class="spot" d="M240 383 Q221 392 200 405 L206 475 L211 575 Q227 594 243 573 L252 459Z"/></g>
+  <g data-zone="feet" tabindex="0" role="button" aria-label="Feet: boots, shoes, and slippers"><path class="spot" d="M157 573 Q170 582 189 575 L190 614 Q185 637 157 640 L141 637 Q142 623 155 608Z"/><path class="spot" d="M243 573 Q230 582 211 575 L210 614 Q215 637 243 640 L259 637 Q258 623 245 608Z"/></g>
+  <!-- A free-standing 2D drawstring pouch, in the same palette as the mannequin. -->
+  <g data-zone="containers" tabindex="0" role="button" aria-label="Containers: select this pouch to browse worn pouches, satchels, and belt containers">
+   <path class="spot" d="M346 385 Q343 375 352 374 Q354 365 362 367 Q368 359 375 367 Q387 365 385 380 L380 389 C390 407 396 429 393 452 C391 470 377 478 363 478 C344 478 331 466 333 449 C334 429 338 406 349 389Z"/>
+   <path class="pouch-detail" d="M348 391 Q365 398 382 391 M349 383 Q364 387 381 383 M351 392 C346 389 340 388 337 385 M379 392 L394 384"/>
+   <path class="pouch-stitch" d="M345 444 Q349 458 363 463 Q380 460 383 446"/>
+  </g>
+ </g>
+</svg><div class="side-buttons right" id="rightZones"></div></div><div class="figure-foot"><details class="export-equipped-menu" id="exportEquippedMenu"><summary title="Export equipped item list as PDF or JPG">↓ Export Equipped</summary><div class="export-equipped-options"><button type="button" id="exportEquippedPdf">PDF document</button><button type="button" id="exportEquippedJpg">JPG image</button></div></details><div class="wearer-footer-copy"><strong id="mapStatus">Unlocked · hover to browse</strong><span id="equipSummary"> · 0 items equipped</span><div>Tabs: <strong>Available / Equipped</strong>. Blue-and-gold regions are equipped. Click a region to unlock.</div></div><button class="equipped-list-trigger" type="button" id="openEquippedList" aria-haspopup="dialog" aria-controls="equippedListScrim" title="Show all equipped items from every body location">Equipped List</button></div></section>
+<section class="card browse" aria-label="Magic item catalog"><div class="cardhead"><h2 class="cardtitle">02 / The collection</h2><label class="collection-text-size" for="collectionTextSize" title="Scale item names, metadata, and list row height"><span>TEXT SIZE</span><select id="collectionTextSize" aria-label="Collection item text and row size"><option value="50">50%</option><option value="75">75%</option><option value="100" selected>100%</option><option value="150">150%</option><option value="200">200%</option><option value="250">250%</option><option value="300">300%</option></select></label></div><div class="controls"><input class="search" id="search" type="search" placeholder="Search item names, locations, rarity or sources…" aria-label="Search all items"><div class="subcontrols"><details class="source-menu" id="sourceMenu"><summary id="sourceSummary">All source books</summary><div class="source-panel" role="group" aria-label="Filter by source books"><div class="source-quick-actions"><span>Select source books</span><div><button type="button" id="sourceAll">All</button> <button type="button" id="sourceNone">None</button></div></div><div class="source-checks" id="sourceChecks"></div></div></details><details class="filter-menu" id="filtersMenu"><summary id="filtersSummary">Filters</summary><div class="filter-panel" role="group" aria-label="Item rarity and attunement filters"><label for="attunementFilter">Attunement<select id="attunementFilter" aria-label="Filter item list by attunement"><option value="Any">Any</option><option value="Yes">Yes</option><option value="No">No</option></select></label><label for="rarityFilter">Rarity<select id="rarityFilter" aria-label="Filter item list by rarity"><option value="Any">Any</option><option value="Common">Common</option><option value="Uncommon">Uncommon</option><option value="Rare">Rare</option><option value="Very Rare">Very Rare</option><option value="Legendary">Legendary</option><option value="Artifact">Artifact</option><option value="Varies">Varies</option><option value="Unknown">Unknown</option></select></label><button type="button" class="small-btn" id="clearItemFilters">Clear filters</button></div></details><button class="ghost" id="savedFilter" type="button">☆ Saved <span id="saveCount">0</span></button><button class="ghost" id="resetBtn" type="button">Reset</button></div></div><div class="heading"><div class="region-line"><h2 id="zoneTitle">Head</h2><p id="zoneDesc" title="Hats, caps, circlets, crowns and helms.">— Hats, caps, circlets, crowns and helms.</p></div><div class="zone-count" id="zoneCount">0 ITEMS</div></div><div class="list-container"><div class="item-grid" id="itemGrid"></div></div><div class="bottom-bar"><button id="clearEquippedBtn" type="button" disabled title="Unequip all currently equipped items">Unequip all</button><div class="bottom-actions"><button class="primary" id="viewAllBtn" type="button" aria-pressed="false" title="Show all active catalog items across every body location">View All</button><button class="primary" id="addBtn" type="button">+ Add item</button></div></div></section>
+</main></div>
+<section id="dataView" class="data-view" role="region" aria-label="Data and CSV database" hidden>
+
+<section class="card editor" aria-label="Editable item database"><div class="cardhead"><div class="editor-head-start"><h2 class="cardtitle">03 / Database Editor</h2><div class="editor-file-actions"><button class="ghost" id="importBtn" type="button" title="Import a CSV into the working catalog">Import</button><button class="primary" id="saveBtn" type="button" title="Download the edited CSV file">Export Edited CSV</button><button class="ghost" id="characterImportBtn" type="button" title="Compare a public D&amp;D Beyond character’s main Equipment inventory against this catalog">Import Character</button><button class="ghost" id="buildImportBtn" type="button" title="Import an Arcane Wardrobe-equipped PDF as an independent temporary catalog">Import Build</button><input id="importFile" type="file" accept=".csv,text/csv" hidden><input id="buildImportFile" type="file" accept=".pdf,application/pdf" hidden></div><span class="editor-row-summary" id="editorFoot" aria-live="polite">No catalog loaded</span></div><div class="editor-head-tools"><button class="ghost editor-reset-widths" id="editorResetWidths" type="button" title="Restore automatically fitted column widths">Reset widths</button><label class="editor-text-size" for="editorTextSize"><span>TEXT SIZE</span><select id="editorTextSize" aria-label="Database table text size"><option value="50">50%</option><option value="75">75%</option><option value="100" selected>100%</option><option value="150">150%</option><option value="200">200%</option><option value="250">250%</option><option value="300">300%</option></select></label></div></div><div class="build-session" id="buildSession" hidden><span id="buildSessionSummary">Temporary build ready</span><div class="build-session-actions"><button class="ghost" type="button" id="buildUseCSV" aria-pressed="false">CSV Catalog</button><button class="ghost" type="button" id="buildUseImported" aria-pressed="false">Imported Build</button><button class="danger-btn" type="button" id="buildDiscard">Discard Build</button></div></div><div class="editor-intro"><div class="editor-tools"><input id="editorSearch" class="search" type="search" placeholder="Find an item to edit…" aria-label="Search database editor"><select id="editorZone" aria-label="Filter editor by body location"><option value="all">Every location</option></select><select id="editorAttunement" aria-label="Filter editor by attunement"><option value="Any">All attunement</option><option value="Yes">Attunement required</option><option value="No">Non-attunement</option></select><select id="editorRarity" aria-label="Filter editor by rarity"><option value="Any">All rarities</option><option value="Common">Common</option><option value="Uncommon">Uncommon</option><option value="Rare">Rare</option><option value="Very Rare">Very Rare</option><option value="Legendary">Legendary</option><option value="Artifact">Artifact</option><option value="Varies">Varies</option><option value="Unknown">Unknown</option></select><button class="primary" id="editorAdd" type="button">+ New row</button><button class="danger-btn" id="editorDelete" type="button" disabled>Delete selected</button></div></div><div class="editor-content" id="editorContent"><table class="table" id="editorTable"><colgroup id="editorColgroup"><col><col><col><col><col><col><col><col></colgroup><thead><tr><th class="select-cell"><input type="checkbox" id="editorSelectAll" aria-label="Select all visible rows for deletion"></th><th data-sort-column="Item Name"><span class="editor-sort-heading"><span class="sort-heading-label">Item Name</span><span class="editor-sort-buttons"><button class="editor-sort-button" type="button" data-sort-direction="asc" aria-label="Sort Item Name ascending A to Z" title="Item Name: A to Z">▲</button><button class="editor-sort-button" type="button" data-sort-direction="desc" aria-label="Sort Item Name descending Z to A" title="Item Name: Z to A">▼</button></span></span></th><th>Body Location</th><th data-sort-column="Rarity"><span class="editor-sort-heading"><span class="sort-heading-label">Rarity</span><span class="editor-sort-buttons"><button class="editor-sort-button" type="button" data-sort-direction="asc" aria-label="Sort Rarity ascending, Common to Unknown" title="Rarity: Common to Unknown">▲</button><button class="editor-sort-button" type="button" data-sort-direction="desc" aria-label="Sort Rarity descending, Unknown to Common" title="Rarity: Unknown to Common">▼</button></span></span></th><th>Attunement</th><th data-sort-column="Source"><span class="editor-sort-heading"><span class="sort-heading-label">Source</span><span class="editor-sort-buttons"><button class="editor-sort-button" type="button" data-sort-direction="asc" aria-label="Sort Source ascending A to Z" title="Source: A to Z">▲</button><button class="editor-sort-button" type="button" data-sort-direction="desc" aria-label="Sort Source descending Z to A" title="Source: Z to A">▼</button></span></span></th><th>Description</th><th>Actions</th></tr></thead><tbody id="editorRows"></tbody></table></div></section>
+
+</section>
+</div>
+<div class="modal-scrim" id="modalScrim"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">Add item</h3><p id="modalDescription">Enter the details for this item.</p><form id="itemForm"><div class="modal-fields"><label class="field wide">Item Name<input id="fieldName" name="name" maxlength="160" required placeholder="e.g. Leggings of Starlight"></label><label class="field">Body Location<select id="fieldZone" name="location" required></select></label><label class="field">Rarity<select id="fieldRarity" name="rarity" required></select></label><label class="field">Attunement<select id="fieldAttune" name="attunement" required></select></label><label class="field wide">Source <span class="optional">(optional)</span><input id="fieldSource" name="source" maxlength="180" placeholder="DMG, Xanathar’s, Homebrew…"></label><label class="field wide">D&amp;D Beyond URL <span class="optional">(optional; direct item link)</span><input id="fieldDDBUrl" name="ddbUrl" type="url" maxlength="500" placeholder="https://www.dndbeyond.com/magic-items/…"></label><label class="field wide">Description <span class="optional">(optional; up to 4,000 characters)</span><textarea id="fieldDescription" name="description" maxlength="4000" rows="5" placeholder="Briefly describe the item and its magical properties…"></textarea></label></div><div class="modal-actions"><button type="button" class="ghost" id="cancelBtn">Cancel</button><button type="submit" class="primary" id="applyBtn">Add item</button></div></form></div></div>
+<div class="modal-scrim" id="detailScrim"><div class="modal item-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="detailTitle" aria-describedby="detailDescription"><div class="detail-heading"><span class="eyebrow">Magic item card</span><button class="iconbtn" id="detailCloseIcon" type="button" aria-label="Close item card">×</button></div><h3 id="detailTitle">Magic item</h3><div class="detail-metadata" id="detailMetadata"></div><div class="detail-section-label">Description / Magical properties</div><p class="detail-description" id="detailDescription"></p><div class="modal-actions"><button class="danger-btn" type="button" id="detailDelete">Delete</button><a class="ghost detail-ddb-link" id="detailDDBLink" target="_blank" rel="noopener noreferrer" style="display:none" aria-label="View this item on D&amp;D Beyond">View on D&amp;D Beyond ↗</a><button class="ghost" type="button" id="detailEdit">Edit item</button><button class="primary" type="button" id="detailClose">Close</button></div></div></div>
+<div class="modal-scrim" id="equippedListScrim"><div class="modal equipped-list-dialog" role="dialog" aria-modal="true" aria-labelledby="equippedListTitle" aria-describedby="equippedListSubtitle"><div class="detail-heading"><span class="eyebrow">01 / The Wearer</span><button class="iconbtn" id="equippedListCloseIcon" type="button" aria-label="Close equipped items list">×</button></div><h3 id="equippedListTitle">Equipped Items</h3><p class="equipped-list-subtitle" id="equippedListSubtitle">0 items equipped</p><div id="equippedListContents" class="equipped-list-scroll" aria-label="Equipped items grouped by body location"></div><div class="modal-actions"><button class="primary" id="equippedListClose" type="button">Close</button></div></div></div>
+
+<div class="modal-scrim" id="characterScrim">
+ <div class="modal character-dialog" role="dialog" aria-modal="true" aria-labelledby="characterImportTitle">
+  <div class="detail-heading"><span class="eyebrow">Character / Equipment comparison</span><button class="iconbtn" id="characterCloseIcon" type="button" aria-label="Close character importer">×</button></div>
+  <h3 id="characterImportTitle">Import D&amp;D Beyond equipment</h3>
+  <p class="character-help">Compare only the <b>main Equipment</b> inventory. Other containers, such as Bag of Holding and Chest – Shop, are excluded. Items missing from the catalog can be added individually using the normal Add Item card, then exported to CSV. Your existing equipped selections change only when you choose Apply equipped items.</p>
+  <div class="character-inputs"><input id="characterUrl" type="url" placeholder="https://www.dndbeyond.com/characters/134559170" aria-label="Public D&D Beyond character link"><button id="characterFetch" type="button" class="ghost">Try public link</button><button id="characterJsonPage" type="button" class="ghost" title="Open the character-data JSON in a separate tab, if publicly accessible">Open JSON ↗</button></div>
+  <p class="character-help">If direct import is blocked by browser security, save the character’s JSON response and load it below, or paste the JSON. No extension or server is required to compare a JSON file.</p>
+  <div class="character-json-actions"><button class="ghost" id="characterLoadFile" type="button">Choose JSON file</button><input id="characterFile" type="file" accept=".json,application/json,text/plain" hidden><button class="ghost" id="characterComparePaste" type="button">Compare pasted JSON</button><span class="character-help">Only equipment names are used; no character data is saved.</span></div>
+  <textarea class="character-import-json" id="characterPaste" placeholder="Paste D&D Beyond character JSON here (not the HTML page)…" aria-label="Paste D&D Beyond character JSON"></textarea>
+  <p class="character-status" id="characterStatus" role="status" aria-live="polite">Import the Arcane Wardrobe CSV first, then enter a character URL or load/paste JSON.</p>
+  <div class="character-results" id="characterResults"><p class="character-empty">The matched, equipped items and unmatched Equipment entries will appear here after comparison.</p></div>
+  <div class="character-actions"><span class="character-help" id="characterCounts">No character compared</span><div class="right"><button class="ghost" id="characterCancel" type="button">Close</button><button class="primary" id="characterApply" type="button" disabled title="Replace the current equipped selection with the matched equipped items">Apply equipped items</button></div></div>
+ </div>
+</div>
+<div class="modal-scrim" id="deleteScrim"><div class="modal confirm-dialog" role="alertdialog" aria-modal="true" aria-labelledby="deleteTitle" aria-describedby="deleteDescription"><h3 id="deleteTitle">Delete selected item(s)?</h3><p id="deleteDescription">This action will remove items from the working catalog.</p><div class="modal-actions"><button class="ghost" id="deleteNo" type="button">No, cancel</button><button class="danger-btn" id="deleteYes" type="button">Yes, delete</button></div></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+const COLUMNS = ['Item Name','Body Location','Rarity','Attunement','Source','Description','D&D Beyond URL'];
+// The URL is kept in the CSV and Edit Item form; the table keeps its familiar six visible columns.
+const EDITOR_DISPLAY_COLUMNS = ['Item Name','Body Location','Rarity','Attunement','Source','Description'];
+function validDDBUrl(value){
+ if(!value)return true;
+ try{const parsed=new URL(value);return parsed.protocol==='https:'&&parsed.hostname==='www.dndbeyond.com'&&/^\/magic-items\/\d+(?:-[a-z0-9-]+)?\/?$/.test(parsed.pathname)&&!parsed.username&&!parsed.password;}
+ catch{return false}
+}
+
+const ZONES = [
+ {name:'Head',short:'Head',description:'Hats, caps, circlets, crowns and helms.'},
+ {name:'Eyes & Face',short:'Eyes',description:'Goggles, eye patches, lenses and other facial accessories.'},
+ {name:'Ears',short:'Ears',description:'Items worn in or around the ears.'},
+ {name:'Neck',short:'Neck',description:'Amulets, necklaces, brooches and periapts.'},
+ {name:'Shoulders',short:'Shoulders',description:'Capes, cloaks and mantles.'},
+ {name:'Arms',short:'Arms',description:'Bangles, bracelets, bracers and armbands.'},
+ {name:'Hands',short:'Hands',description:'Gloves, gauntlets and other hand-worn items. Rings are listed separately under Fingers.'},
+ {name:'Fingers',short:'↳ Fingers',parent:'Hands',description:'Magical rings, all tracked together; no individual finger slots.'},
+ {name:'Chest & Torso',short:'Torso',description:'Vests, shirts, robes and garments.'},
+ {name:'Charms/Pins/Baubles',short:'↳ Charms/Pins',description:'Torso accessories: lapel pins, badges, clockwork amulets, charms and small magical baubles.',parent:'Chest & Torso'},
+ {name:'Waist',short:'Waist',description:'Belts, girdles and waist-worn accessories.'},
+ {name:'Containers',short:'Containers',description:'Worn pouches, belt bags, satchels and other wearable containers.'},
+ {name:'Legs',short:'Legs',description:'Leggings, trousers, greaves, knee guards and leg-worn items.'},
+ {name:'Feet',short:'Feet',description:'Boots, shoes, sandals and slippers.'},
+ {name:'Back',short:'Back',description:'Select the cape behind the mannequin; packs, cloaks and other back-carried accessories.'},
+ {name:'Skin & Tattoos',short:'Tattoos',description:'Magical tattoos and skin-worn markings.'},
+ {name:'Unknown Location',short:'Inactive',description:'Unassigned items are inactive until you edit their Body Location in Database Editor.'}
+];
+// Order options by approximate position on the wearer, with inactive items last.
+const LOCATION_OPTIONS=[
+ 'Head','Eyes & Face','Ears','Neck','Shoulders','Back',
+ 'Chest & Torso','Charms/Pins/Baubles','Arms','Hands','Fingers','Waist','Containers',
+ 'Legs','Feet','Skin & Tattoos','Unknown Location'
+];
+const RARITIES=['Common','Uncommon','Rare','Very Rare','Legendary','Artifact','Varies','Unknown'];
+const ATTUNEMENTS=['Yes','No','Unknown'];
+const LOCATION_ALIASES={'eyes':'Eyes & Face','face':'Eyes & Face','neck & collar':'Neck','torso':'Chest & Torso','chest':'Chest & Torso','leg':'Legs','pants':'Legs','trousers':'Legs','charms':'Charms/Pins/Baubles','pins':'Charms/Pins/Baubles','baubles':'Charms/Pins/Baubles','charms & pins':'Charms/Pins/Baubles','rings':'Fingers','ring':'Fingers','finger':'Fingers','skin':'Skin & Tattoos','tattoos':'Skin & Tattoos','container':'Containers','pouch':'Containers','pouches':'Containers'};
+const el=id=>document.getElementById(id);
+const norm=value=>String(value??'').trim().toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+let items=[];
+let csvItems=items,temporaryBuildItems=null,activeCatalog='csv';
+let csvDirty=false,buildDirty=false;
+let lastCollectionScrollContext=null;
+let selected='Head', lockedZone=null, textQuery='', sourceSelection=null, savedOnly=false, viewAll=false, attunementFilter='Any', rarityFilter='Any';
+const NO_SOURCE='__ARCANE_UNSPECIFIED_SOURCE__';
+let dirty=false, editIndex=-1, returnFocus=null, editorFilter='';
+let editorSort={column:'Item Name',direction:'asc'}; // Exactly one active sort; filters remain independent.
+let saved=new Set(),equipped=new Set(),selectedEditorKeys=new Set();
+let detailIndex=-1,detailReturnFocus=null;
+try{const data=JSON.parse(localStorage.getItem('arcane-wardrobe-saved-v1')||'[]');if(Array.isArray(data))saved=new Set(data)}catch{}
+try{const data=JSON.parse(localStorage.getItem('arcane-wardrobe-equipped-v1')||'[]');if(Array.isArray(data))equipped=new Set(data)}catch{}
+let csvSaved=saved,csvEquipped=equipped,buildSaved=new Set(),buildEquipped=new Set();
+// Only the CSV catalog has persistent bookmarks/equipment. Imported builds live in memory
+// and never overwrite the CSV or its equipped choices in localStorage.
+function persistPersonal(){
+ if(activeCatalog==='build')return;
+ try{localStorage.setItem('arcane-wardrobe-saved-v1',JSON.stringify([...saved]));localStorage.setItem('arcane-wardrobe-equipped-v1',JSON.stringify([...equipped]))}
+ catch{notify('Browser storage is unavailable; bookmarks and equipment may not persist.')}
+}
+function catalogKeys(){return new Set(items.map(itemKey))}
+function availableSaved(){const keys=catalogKeys();return [...saved].filter(key=>keys.has(key)).length}
+function availableEquipped(){const keys=new Set(items.filter(row=>row['Body Location']!=='Unknown Location').map(itemKey));return [...equipped].filter(key=>keys.has(key)).length}
+function equippedZones(){return new Set(items.filter(row=>row['Body Location']!=='Unknown Location'&&equipped.has(itemKey(row))).map(row=>row['Body Location']))}
+function toggleEquipped(row){if(row['Body Location']==='Unknown Location'){notify('Assign a body location in Database Editor before equipping this item.');return;}const key=itemKey(row);if(equipped.has(key))equipped.delete(key);else equipped.add(key);persistPersonal();renderZones();renderCollection()}
+
+const zoneFromElement={containers:'Containers',fingers:'Fingers',head:'Head',eyes:'Eyes & Face',ears:'Ears',neck:'Neck',shoulders:'Shoulders',arms:'Arms',hands:'Hands',torso:'Chest & Torso',charms:'Charms/Pins/Baubles',waist:'Waist',legs:'Legs',feet:'Feet',back:'Back',skin:'Skin & Tattoos'};
+const zoneDisplay=name=>ZONES.find(z=>z.name===name)||ZONES[0];
+const itemKey=item=>norm(item['Item Name'])+'|'+norm(item['Source']);
+function notify(message){const toast=el('toast');toast.textContent=message;toast.classList.add('show');clearTimeout(notify.timer);notify.timer=setTimeout(()=>toast.classList.remove('show'),4300)}
+function markChanged(){dirty=true;renderAll()}
+function fieldOptions(node,values){node.replaceChildren(...values.map(v=>new Option(v,v)))}
+function canonicalLocation(value){const input=norm(value);return ZONES.find(z=>norm(z.name)===input)?.name||LOCATION_ALIASES[input]||null}
+function canonicalRarity(value){const input=norm(value)||'unknown';return RARITIES.find(v=>norm(v)===input)||null}
+function canonicalAttune(value){let input=norm(value)||'unknown';input=({'true':'yes','required':'yes','false':'no','none':'no','n/a':'unknown'})[input]||input;return ATTUNEMENTS.find(v=>norm(v)===input)||null}
+function validate(raw){
+ if(!Array.isArray(raw)||raw.length>10000)throw Error('The catalog must have no more than 10,000 rows.');
+ const checked=[],seen=new Set();
+ raw.forEach((r,index)=>{
+  const row=index+2;
+  const name=String(r['Item Name']??'').trim();
+  const location=canonicalLocation(r['Body Location']);
+  const rarity=canonicalRarity(r.Rarity);
+  const attunement=canonicalAttune(r.Attunement);
+  const source=String(r.Source??'').trim();
+  const description=String(r.Description??'').trim();
+  const ddbUrl=String(r['D&D Beyond URL']??'').trim();
+  if(!name||name.length>160||/[\r\n\0]/.test(name))throw Error(`CSV row ${row}: enter a one-line item name (up to 160 characters).`);
+  if(!location)throw Error(`CSV row ${row}: unrecognized body location “${r['Body Location']??''}”.`);
+  if(!rarity)throw Error(`CSV row ${row}: unrecognized rarity “${r.Rarity??''}”.`);
+  if(!attunement)throw Error(`CSV row ${row}: Attunement must be Yes, No or Unknown.`);
+  if(source.length>180||/[\r\n\0]/.test(source))throw Error(`CSV row ${row}: Source must fit on one line (up to 180 characters).`);
+  if(description.length>4000||description.includes('\0'))throw Error(`CSV row ${row}: Description must not exceed 4,000 characters or contain NUL.`);
+  if(ddbUrl.length>500||!validDDBUrl(ddbUrl))throw Error(`CSV row ${row}: D&D Beyond URL must be a valid https://www.dndbeyond.com/magic-items/... link (or empty).`);
+  const record={'Item Name':name,'Body Location':location,'Rarity':rarity,'Attunement':attunement,'Source':source,'Description':description,'D&D Beyond URL':ddbUrl};
+  const key=itemKey(record);
+  if(seen.has(key))throw Error(`CSV row ${row}: duplicate item name and source (${name}).`);
+  seen.add(key);checked.push(record);
+ });
+ return checked;
+}
+// The catalog is a hash-delimited CSV. Ordinary commas are part of item text.
+// Legacy comma-separated files and seven-column CSVs (with Item Category) still import; the obsolete category is dropped; the optional D&D Beyond URL is retained.
+const CSV_DELIMITER='#';
+function parseDelimitedCSV(input,delimiter){
+ const s=String(input).replace(/^\uFEFF/,'');
+ const rows=[];let row=[],field='',quoted=false,closedQuote=false;
+ for(let i=0;i<s.length;i++){
+  const ch=s[i];
+  if(quoted){
+   if(ch==='"'&&s[i+1]==='"'){field+='"';i++}
+   else if(ch==='"'){quoted=false;closedQuote=true}
+   else{field+=ch}
+  }
+  else if(ch==='"'){
+   if(field!==''||closedQuote)throw Error('Unexpected quote in CSV field.');
+   quoted=true;
+  }
+  else if(ch===delimiter){row.push(field);field='';closedQuote=false}
+  else if(ch==='\r'||ch==='\n'){
+   row.push(field);if(row.some(c=>c.trim()!==''))rows.push(row);
+   row=[];field='';closedQuote=false;if(ch==='\r'&&s[i+1]==='\n')i++;
+  }
+  else{
+   if(closedQuote)throw Error('Unexpected characters after a quoted CSV field.');
+   field+=ch;
+  }
+ }
+ if(quoted)throw Error('CSV has an unclosed quote.');
+ row.push(field);if(row.some(c=>c.trim()!==''))rows.push(row);
+ if(!rows.length)throw Error('The CSV file is empty.');
+ const headers=rows.shift().map(v=>v.trim());
+ for(const head of COLUMNS.slice(0,4))if(!headers.includes(head))throw Error('Missing required column: '+head);
+ const records=rows.map((values,idx)=>{
+  if(values.length>headers.length)throw Error('CSV row '+(idx+2)+' has too many columns.');
+  const record={};COLUMNS.forEach(head=>record[head]=values[headers.indexOf(head)]??'');return record;
+ });
+ return validate(records);
+}
+function parseCSV(input){
+ try{return parseDelimitedCSV(input,CSV_DELIMITER)}
+ catch(hashError){
+  try{return parseDelimitedCSV(input,',')}
+  catch{throw Error('The catalog must use # between columns. '+hashError.message)}
+ }
+}
+function csvText(records){
+ const q=value=>'"'+String(value??'').replaceAll('"','""')+'"';
+ return '\uFEFF'+[COLUMNS,...records.map(r=>COLUMNS.map(c=>r[c]??''))].map(r=>r.map(q).join(CSV_DELIMITER)).join('\r\n')+'\r\n';
+}
+function downloadCSV(){
+ const data=csvText(items),blob=new Blob([data],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download=activeCatalog==='build'?'Arcane_Wardrobe_Imported_Build.csv':'magic_items.csv';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3500);
+ dirty=false;if(activeCatalog==='csv')csvDirty=false;else buildDirty=false;renderToolbar();renderEditor();notify(`Exported ${items.length} ${activeCatalog==='build'?'temporary build':'CSV catalog'} entries.`);
+}
+function rememberActiveCatalog(){
+ if(activeCatalog==='csv'){
+  csvItems=items;csvSaved=saved;csvEquipped=equipped;csvDirty=dirty;
+ }else{
+  temporaryBuildItems=items;buildSaved=saved;buildEquipped=equipped;buildDirty=dirty;
+ }
+}
+function resetCatalogControls(){
+ selected='Head';lockedZone=null;textQuery='';sourceSelection=null;savedOnly=false;viewAll=false;
+ attunementFilter='Any';rarityFilter='Any';selectedEditorKeys.clear();lastCollectionScrollContext=null;
+ editorFilter='';
+ el('search').value='';el('editorSearch').value='';el('editorZone').value='all';
+ el('editorAttunement').value='Any';el('editorRarity').value='Any';
+ el('sourceMenu').open=false;el('filtersMenu').open=false;
+}
+function selectCatalog(mode){
+ if(mode==='build'&&!temporaryBuildItems)return;
+ if(mode===activeCatalog)return;
+ rememberActiveCatalog();activeCatalog=mode;
+ items=mode==='build'?temporaryBuildItems:csvItems;
+ saved=mode==='build'?buildSaved:csvSaved;
+ equipped=mode==='build'?buildEquipped:csvEquipped;
+ dirty=mode==='build'?buildDirty:csvDirty;
+ resetCatalogControls();renderAll();
+ notify(mode==='build'?'Viewing temporary PDF build; your imported CSV is unchanged.':'Viewing the CSV catalog; the imported PDF build remains available.');
+}
+function renderBuildSession(){
+ const hasBuild=temporaryBuildItems!==null;
+ el('buildSession').hidden=!hasBuild;
+ if(!hasBuild)return;
+ el('buildSessionSummary').textContent=`Temporary PDF build · ${activeCatalog==='build'?items.length:temporaryBuildItems.length} items · CSV catalog · ${activeCatalog==='csv'?items.length:csvItems.length} items`;
+ el('buildUseCSV').setAttribute('aria-pressed',String(activeCatalog==='csv'));
+ el('buildUseImported').setAttribute('aria-pressed',String(activeCatalog==='build'));
+}
+function renderToolbar(){
+ const status=el('storageStatus');
+ status.textContent=activeCatalog==='build'
+  ?(dirty?'● Unsaved temporary build edits':`✓ Temporary PDF build · ${items.length} items`)
+  :(dirty?'● Unsaved CSV catalog edits':items.length?'✓ CSV imported for editing':'HTML-only CSV editing mode');
+ status.style.color=dirty?'var(--gold2)':'var(--green)';
+ el('storageHint').textContent=activeCatalog==='build'
+  ?'Temporary in this tab · Your CSV catalog is preserved · Export Build CSV to save changes'
+  :items.length?'Edits stay in this tab · Export Edited CSV to save · Drop CSV to import'
+  :'Import a #‑delimited CSV or an Arcane Wardrobe build PDF to begin';
+ el('saveBtn').textContent=activeCatalog==='build'?'Export Build CSV':'Export Edited CSV';
+ el('saveBtn').disabled=false;
+ renderBuildSession();
+}
+
+function sourceBook(value){return String(value||'').trim().replace(/\s+p\d+(?:[–-]\d+)?$/i,'')||NO_SOURCE}
+function sourceValues(){return [...new Set(items.map(i=>sourceBook(i.Source)))].sort((a,b)=>{
+ if(a===NO_SOURCE)return 1;if(b===NO_SOURCE)return -1;return a.localeCompare(b);
+})}
+function sourceCaption(value){return value===NO_SOURCE?'Unspecified source':value}
+function renderSources(){
+ const sources=sourceValues();
+ if(sourceSelection!==null){sourceSelection=new Set([...sourceSelection].filter(s=>sources.includes(s)));if(sourceSelection.size===sources.length)sourceSelection=null}
+ const checked=sourceSelection===null?new Set(sources):sourceSelection;
+ const summary=sourceSelection===null?'All source books':`Sources: ${checked.size} of ${sources.length}`;
+ el('sourceSummary').textContent=summary;
+ const list=el('sourceChecks');list.replaceChildren();
+ if(!sources.length){const p=document.createElement('span');p.className='source-option';p.textContent='Import a catalog to see source books.';list.append(p);return}
+ for(const value of sources){
+  const label=document.createElement('label');label.className='source-option';
+  const check=document.createElement('input');check.type='checkbox';check.value=value;check.checked=checked.has(value);
+  check.addEventListener('change',()=>{
+   const next=sourceSelection===null?new Set(sourceValues()):new Set(sourceSelection);
+   if(check.checked)next.add(value);else next.delete(value);
+   sourceSelection=next.size===sourceValues().length?null:next;
+   renderSources();renderCollection();
+  });
+  label.append(check,document.createTextNode(sourceCaption(value)));list.append(label);
+ }
+}
+function renderZones(){
+ const counts=Object.fromEntries(ZONES.map(z=>[z.name,0]));
+ const wornCounts=Object.fromEntries(ZONES.map(z=>[z.name,0]));
+ for(const item of items){const slot=item['Body Location'];if(slot in counts){counts[slot]++;if(equipped.has(itemKey(item)))wornCounts[slot]++;}}
+ const wearing=equippedZones();
+ document.querySelectorAll('[data-zone]').forEach(element=>{
+  const zone=zoneFromElement[element.dataset.zone]||element.dataset.zone;
+  element.classList.toggle('active',zone===selected&&!savedOnly&&!viewAll);
+  element.classList.toggle('locked',zone===lockedZone);
+  element.classList.toggle('equipped',wearing.has(zone));
+  element.setAttribute('aria-pressed',String(zone===lockedZone));
+  if(element.classList.contains('zone-btn')){
+   element.querySelector('em').textContent=`${counts[zone]||0} / ${wornCounts[zone]||0}`;
+   element.title=`${zone}: ${counts[zone]||0} available / ${wornCounts[zone]||0} equipped`;
+   element.setAttribute('aria-label',(zone===lockedZone?'Unlock ':'Lock ')+`${zone}: ${counts[zone]||0} available, ${wornCounts[zone]||0} equipped`);
+  }
+ });
+ el('mapStatus').textContent=lockedZone?'Locked: '+lockedZone:'Unlocked · hover to browse';
+ const n=availableEquipped();el('equipSummary').textContent=` · ${n} ${n===1?'item':'items'} equipped`;
+ el('clearEquippedBtn').disabled=n===0;
+ if(el('equippedListScrim').classList.contains('open'))renderEquippedList();
+}
+function renderItemFilters(){
+ el('attunementFilter').value=attunementFilter;
+ el('rarityFilter').value=rarityFilter;
+ const n=Number(attunementFilter!=='Any')+Number(rarityFilter!=='Any');
+ el('filtersSummary').textContent=n?`Filters · ${n} active`:'Filters';
+ el('filtersMenu').classList.toggle('has-filters',!!n);
+}
+function clearItemFilters(){attunementFilter='Any';rarityFilter='Any';renderItemFilters();renderCollection()}
+function showView(which){
+ const isData=which==='data';
+ el('wardrobeView').hidden=isData;
+ el('dataView').hidden=!isData;
+ el('openDataTab').classList.toggle('active',isData);
+ el('openDataTab').setAttribute('aria-pressed',String(isData));
+ el('openDataTab').textContent=isData?'← Wardrobe':'Data / CSV';
+ el('openDataTab').setAttribute('aria-label',isData?'Return to Wardrobe':'Open Data / CSV');
+ el('catalogHeader').hidden=!isData;
+ if(isData){renderToolbar();renderEditor();requestAnimationFrame(applyEditorColumnWidths)}
+ if(window.scrollY)window.scrollTo({top:0,behavior:'instant'});
+}
+function applyDisplayMode(raw){
+ const mode=['auto','1080p','1440p','4k'].includes(raw)?raw:'auto';
+ document.documentElement.dataset.display=mode;
+ el('displayMode').value=mode;
+ if(typeof editorColumnWidths!=='undefined'&&!el('dataView').hidden)requestAnimationFrame(applyEditorColumnWidths);
+ try{localStorage.setItem('arcane-wardrobe-display-v1',mode)}catch{}
+}
+function matchesSearch(row,query){return norm(COLUMNS.map(c=>row[c]).join(' ')).includes(query)}
+function visibleItems(){
+ const query=norm(textQuery);
+ return items.map((row,index)=>({row,index})).filter(({row})=>{
+  if(row['Body Location']==='Unknown Location')return false;
+  if(sourceSelection!==null&&!sourceSelection.has(sourceBook(row.Source)))return false;
+  if(attunementFilter!=='Any'&&row.Attunement!==attunementFilter)return false;
+  if(rarityFilter!=='Any'&&row.Rarity!==rarityFilter)return false;
+  if(savedOnly){if(!saved.has(itemKey(row)))return false;return !query||matchesSearch(row,query)}
+  if(lockedZone&&row['Body Location']!==lockedZone)return false;
+  if(query)return matchesSearch(row,query);
+  if(viewAll)return true;
+  return row['Body Location']===selected;
+ }).sort((a,b)=>a.row['Body Location'].localeCompare(b.row['Body Location'])||a.row['Item Name'].localeCompare(b.row['Item Name']));
+}
+function makeIcon(symbol,label,fn,isActive=false){
+ const b=document.createElement('button');b.type='button';b.className='iconbtn'+(isActive?' active':'');b.textContent=symbol;b.title=label;b.setAttribute('aria-label',label);b.addEventListener('click',fn);return b;
+}
+function renderCollection(){
+ const query=norm(textQuery),viewSaved=savedOnly,allLocations=viewAll&&!viewSaved&&!lockedZone;
+ const globalSearch=!viewSaved&&!lockedZone&&!!query;
+ el('zoneTitle').textContent=viewSaved?'All saved items':allLocations?'All available items':globalSearch?'Search results':selected;
+ const regionDescription=viewSaved?'Bookmarked items from every body location.':allLocations?'All assigned body locations · current search and filters apply.':lockedZone?'Locked — click this body region again to unlock.':globalSearch?'Matching items from every body location.':zoneDisplay(selected).description;
+ el('viewAllBtn').setAttribute('aria-pressed',String(allLocations));
+ el('zoneDesc').textContent='— '+regionDescription;
+ el('zoneDesc').title=regionDescription;
+ const matches=visibleItems();
+ el('zoneCount').textContent=matches.length+' '+(matches.length===1?'ITEM':'ITEMS');
+ el('totalCount').textContent=items.filter(r=>r['Body Location']!=='Unknown Location').length+' active · '+items.filter(r=>r['Body Location']==='Unknown Location').length+' inactive';
+ el('saveCount').textContent=availableSaved();
+ el('savedFilter').style.borderColor=viewSaved?'var(--gold)':'';
+ el('savedFilter').setAttribute('aria-pressed',String(viewSaved));
+ const currentScrollContext=JSON.stringify([viewSaved,viewAll,globalSearch,selected,lockedZone,textQuery,attunementFilter,rarityFilter,sourceSelection===null?null:[...sourceSelection].sort()]);
+ if(currentScrollContext!==lastCollectionScrollContext){el('itemGrid').parentElement.scrollTop=0;lastCollectionScrollContext=currentScrollContext;}
+ const grid=el('itemGrid');grid.replaceChildren();
+ if(!matches.length){
+  const empty=document.createElement('div');empty.className='empty';const title=document.createElement('strong');
+  title.textContent=items.length===0?'Catalog is empty':viewSaved&&!availableSaved()?'No saved items':!viewSaved&&!query&&selected==='Legs'?'No leg items yet':'Nothing found';
+  const hint=items.length===0?'Import magic_items.csv to load the starter catalog.':viewSaved&&!availableSaved()?'Use the ☆ star on any item to bookmark it here.':!viewSaved&&!query&&selected==='Legs'?'Use + Add item to catalog leggings, trousers, greaves or similar equipment.':'Try another region, source book, or search term.';
+  empty.append(title,document.createTextNode(hint));grid.append(empty);return;
+ }
+ for(const {row,index} of matches){
+  const card=document.createElement('article');card.className='item';
+  const marked=saved.has(itemKey(row)),isEquipped=equipped.has(itemKey(row));
+  if(isEquipped)card.classList.add('worn');
+  const main=document.createElement('div');main.className='item-main';
+  const name=document.createElement('div');name.className='item-name';name.textContent=row['Item Name'];name.title=row['Item Name'];
+  const metadata=document.createElement('div');metadata.className='item-meta';
+  const attune=document.createElement('span');attune.className='attune-label '+norm(row.Attunement);
+  attune.textContent='Attune: '+(row.Attunement==='Yes'?'Yes':row.Attunement==='No'?'No':'?');
+  const details=document.createElement('span');details.className='metadata-copy';details.textContent=`${row.Rarity} · ${zoneDisplay(row['Body Location']).short.replace(/^↳ /,'')} · ${row.Source||'No source'}`;
+  metadata.title=`${row.Rarity} · ${row['Body Location']} · ${row.Source||'No source'} · Attunement: ${row.Attunement}`;
+  metadata.append(attune,details);main.append(name,metadata);
+  const actions=document.createElement('div');actions.className='item-actions';
+  actions.append(makeIcon('ⓘ','View item card for '+row['Item Name'],()=>openDetails(index)));
+  actions.append(makeIcon(marked?'★':'☆',(marked?'Remove bookmark: ':'Bookmark: ')+row['Item Name'],()=>{
+   const key=itemKey(row);if(saved.has(key))saved.delete(key);else saved.add(key);
+   persistPersonal();renderCollection();
+  },marked));
+  const equipBtn=document.createElement('button');equipBtn.type='button';equipBtn.className='equip-btn'+(isEquipped?' active':'');
+  equipBtn.textContent=isEquipped?'Unequip':'Equip';
+  equipBtn.title=(isEquipped?'Unequip ':'Equip ')+row['Item Name'];
+  equipBtn.setAttribute('aria-label',(isEquipped?'Unequip ':'Equip ')+row['Item Name']);
+  equipBtn.setAttribute('aria-pressed',String(isEquipped));
+  equipBtn.addEventListener('click',()=>toggleEquipped(row));actions.append(equipBtn);
+  actions.append(makeIcon('✎','Edit '+row['Item Name'],()=>openEditor(index)));
+  card.append(main,actions);grid.append(card);
+ }
+}
+// Sorting applies ONLY after the current editor search and dropdown filters.
+// Equal values keep their original catalog order rather than introducing a second sort.
+const EDITOR_SORT_COLLATOR=new Intl.Collator(undefined,{sensitivity:'base',numeric:true});
+function compareEditorRows(a,b){
+ let comparison=0;
+ if(editorSort.column==='Rarity'){
+  const rank=value=>{const n=RARITIES.findIndex(r=>norm(r)===norm(value));return n<0?RARITIES.length-1:n};
+  comparison=rank(a.row.Rarity)-rank(b.row.Rarity);
+ }else{
+  comparison=EDITOR_SORT_COLLATOR.compare(a.row[editorSort.column]||'',b.row[editorSort.column]||'');
+ }
+ return editorSort.direction==='desc'?-comparison:comparison;
+}
+function filteredEditorRows(){
+ const filter=norm(editorFilter),zone=el('editorZone').value,attune=el('editorAttunement').value,rarity=el('editorRarity').value;
+ return items.map((row,index)=>({row,index})).filter(({row})=>
+  (zone==='all'||row['Body Location']===zone)&&(attune==='Any'||row.Attunement===attune)&&(rarity==='Any'||row.Rarity===rarity)&&(!filter||matchesSearch(row,filter))
+ ).sort(compareEditorRows);
+}
+function updateEditorSortButtons(){
+ document.querySelectorAll('#editorTable thead th[data-sort-column]').forEach(header=>{
+  const column=header.dataset.sortColumn;
+  header.setAttribute('aria-sort',editorSort.column===column?(editorSort.direction==='asc'?'ascending':'descending'):'none');
+  header.querySelectorAll('.editor-sort-button').forEach(button=>{
+   const active=editorSort.column===column&&button.dataset.sortDirection===editorSort.direction;
+   button.setAttribute('aria-pressed',String(active));
+  });
+ });
+}
+function setupEditorSorting(){
+ document.querySelectorAll('#editorTable .editor-sort-button').forEach(button=>{
+  button.addEventListener('click',()=>{
+   editorSort={column:button.closest('[data-sort-column]').dataset.sortColumn,direction:button.dataset.sortDirection};
+   renderEditor();
+   el('editorContent').scrollTop=0;
+  });
+ });
+ updateEditorSortButtons();
+}
+
+/* Database column widths are UI preferences only; they are not CSV fields.
+   Grips are on the left edge of each adjustable header (Body Location onward).
+   Resizing shares space with the previous column so widening Description
+   can shrink Source without making the table arbitrarily wider. */
+const EDITOR_WIDTH_KEY='arcane-wardrobe-editor-column-widths-v1';
+const EDITOR_COLUMN_LABELS=['Select','Item Name','Body Location','Rarity','Attunement','Source','Description','Actions'];
+const EDITOR_DEFAULT_WIDTHS=[46,255,205,116,130,145,330,145];
+const EDITOR_MIN_WIDTHS=[46,145,160,86,108,72,145,129];
+let editorColumnWidths=EDITOR_DEFAULT_WIDTHS.slice(),editorDisplayedWidths=EDITOR_DEFAULT_WIDTHS.slice();
+function restoreEditorColumnWidths(){
+ try{
+  const savedWidths=JSON.parse(localStorage.getItem(EDITOR_WIDTH_KEY)||'null');
+  if(Array.isArray(savedWidths)&&savedWidths.length===8&&savedWidths.every((w,i)=>Number.isFinite(w)&&w>=EDITOR_MIN_WIDTHS[i]&&w<=1800))editorColumnWidths=savedWidths.slice();
+ }catch{}
+}
+function saveEditorColumnWidths(){try{localStorage.setItem(EDITOR_WIDTH_KEY,JSON.stringify(editorColumnWidths))}catch{}}
+/* Rebalance preferred (potentially user-resized) column widths into the visible
+   editor viewport. Only overflow horizontally if the sum of real minimum column
+   widths is greater than the space available. This also migrates oversized
+   preferences left over from older versions without discarding them. */
+function fitEditorWidths(preferred,available){
+ const w=preferred.map((v,i)=>Math.max(EDITOR_MIN_WIDTHS[i],Math.round(v)));
+ const minTotal=EDITOR_MIN_WIDTHS.reduce((a,b)=>a+b,0);
+ const target=Math.max(minTotal,Math.floor(available));
+ const total=w.reduce((a,b)=>a+b,0);
+ if(total<target){
+  w[6]+=target-total; // Give spare width to Description, not Source.
+ }else if(total>target){
+  const desiredCut=total-target;
+  const capacity=w.map((v,i)=>v-EDITOR_MIN_WIDTHS[i]);
+  const totalCapacity=capacity.reduce((a,b)=>a+b,0);
+  const cuts=capacity.map(c=>Math.floor(desiredCut*c/totalCapacity));
+  let remaining=desiredCut-cuts.reduce((a,b)=>a+b,0);
+  const priorities=capacity.map((c,i)=>({i,fraction:desiredCut*c/totalCapacity-cuts[i]}))
+    .sort((a,b)=>b.fraction-a.fraction);
+  for(const {i} of priorities){if(!remaining)break;if(cuts[i]<capacity[i]){cuts[i]++;remaining--}}
+  w.forEach((v,i)=>w[i]=v-cuts[i]);
+ }
+ return w;
+}
+function applyEditorColumnWidths(){
+ const wrap=el('editorContent');if(!wrap)return;
+ // clientWidth excludes the vertical scrollbar; scrollWidth must not exceed it
+ // unless the minimum usable column sizes cannot genuinely fit.
+ const w=fitEditorWidths(editorColumnWidths,wrap.clientWidth);
+ // As viewer zoom grows, reserve enough space for Edit + Delete side by side.
+ // Borrow that space from Description first; scroll horizontally only if
+ // all other columns have reached their practical minimum widths.
+ const actions=el('editorRows').querySelector('.editor-row-actions');
+ const needed=actions?Math.ceil(actions.scrollWidth+26):EDITOR_MIN_WIDTHS[7];
+ let deficit=Math.max(0,needed-w[7]);
+ for(const i of [6,5,1,2,4,3]){
+  const take=Math.min(deficit,Math.max(0,w[i]-EDITOR_MIN_WIDTHS[i]));
+  w[i]-=take;w[7]+=take;deficit-=take;
+  if(!deficit)break;
+ }
+ if(deficit)w[7]+=deficit;
+ editorDisplayedWidths=w;
+ const cols=el('editorColgroup').querySelectorAll('col');
+ cols.forEach((col,i)=>col.style.width=w[i]+'px');
+ el('editorTable').style.width=w.reduce((sum,n)=>sum+n,0)+'px';
+}
+function resizeEditorBoundary(rightIndex,delta,fromWidths){
+ const left=rightIndex-1,total=fromWidths[left]+fromWidths[rightIndex];
+ const minLeft=EDITOR_MIN_WIDTHS[left],minRight=EDITOR_MIN_WIDTHS[rightIndex];
+ const newLeft=Math.max(minLeft,Math.min(total-minRight,fromWidths[left]+delta));
+ const result=fromWidths.slice();result[left]=newLeft;result[rightIndex]=total-newLeft;
+ editorColumnWidths=result.slice();applyEditorColumnWidths();
+}
+function setupEditorColumnResizers(){
+ restoreEditorColumnWidths();
+ const headers=el('editorTable').querySelectorAll('thead th');
+ for(let rightIndex=2;rightIndex<EDITOR_COLUMN_LABELS.length;rightIndex++){
+  const grip=document.createElement('span');grip.className='column-grip';
+  grip.setAttribute('role','separator');grip.setAttribute('aria-orientation','vertical');grip.setAttribute('tabindex','0');
+  grip.setAttribute('aria-label',`Resize ${EDITOR_COLUMN_LABELS[rightIndex-1]} and ${EDITOR_COLUMN_LABELS[rightIndex]}`);
+  grip.title=`Drag to resize ${EDITOR_COLUMN_LABELS[rightIndex-1]} / ${EDITOR_COLUMN_LABELS[rightIndex]}; use arrow keys for precise adjustments`;
+  headers[rightIndex].prepend(grip);
+  grip.addEventListener('pointerdown',event=>{
+   if(event.button!==0)return;
+   event.preventDefault();event.stopPropagation();
+   const startX=event.clientX,startWidths=editorDisplayedWidths.slice();
+   grip.classList.add('is-dragging');document.body.classList.add('editor-resizing');
+   const move=e=>{resizeEditorBoundary(rightIndex,Math.round(e.clientX-startX),startWidths)};
+   const done=()=>{
+    document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',done);
+    document.removeEventListener('pointercancel',done);window.removeEventListener('blur',done);
+    grip.classList.remove('is-dragging');document.body.classList.remove('editor-resizing');saveEditorColumnWidths();
+   };
+   document.addEventListener('pointermove',move);document.addEventListener('pointerup',done);
+   document.addEventListener('pointercancel',done);window.addEventListener('blur',done);
+  });
+  grip.addEventListener('keydown',event=>{
+   if(event.key!=='ArrowLeft'&&event.key!=='ArrowRight')return;
+   event.preventDefault();resizeEditorBoundary(rightIndex,(event.key==='ArrowRight'?1:-1)*(event.shiftKey?32:12),editorDisplayedWidths.slice());saveEditorColumnWidths();
+  });
+ }
+ el('editorResetWidths').addEventListener('click',()=>{
+  editorColumnWidths=EDITOR_DEFAULT_WIDTHS.slice();applyEditorColumnWidths();
+  try{localStorage.removeItem(EDITOR_WIDTH_KEY)}catch{}
+  notify('Column widths reset and fitted to the editor window.');
+ });
+ window.addEventListener('resize',()=>{if(!el('dataView').hidden)applyEditorColumnWidths()});
+ applyEditorColumnWidths();
+}
+
+function renderEditor(){
+ updateEditorSortButtons();
+ const candidates=filteredEditorRows(),tbody=el('editorRows');tbody.replaceChildren();
+ if(!candidates.length){const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=8;td.className='muted';td.textContent='No matching entries. Add a new row or change the editor filters.';tr.append(td);tbody.append(tr)}
+ for(const {row,index} of candidates){
+  const tr=document.createElement('tr'),key=itemKey(row);
+  const tdSelect=document.createElement('td');tdSelect.className='select-cell';
+  const check=document.createElement('input');check.type='checkbox';check.checked=selectedEditorKeys.has(key);check.setAttribute('aria-label','Select '+row['Item Name']+' for deletion');
+  check.addEventListener('change',()=>{if(check.checked)selectedEditorKeys.add(key);else selectedEditorKeys.delete(key);renderEditorSelection(candidates)});
+  tdSelect.append(check);tr.append(tdSelect);
+  for(const col of EDITOR_DISPLAY_COLUMNS){const td=document.createElement('td');
+   if(col==='Body Location'){
+    td.className='editor-location-cell';
+    const select=document.createElement('select');
+    select.className='editor-location-select'+(row[col]==='Unknown Location'?' is-unknown':'');
+    select.dataset.rowIndex=String(index);
+    select.setAttribute('aria-label','Body Location for '+row['Item Name']);
+    select.title='Choose a location to activate this item, or Unknown Location to deactivate it';
+    fieldOptions(select,LOCATION_OPTIONS);select.value=row[col];
+    select.addEventListener('change',event=>changeEditorLocation(index,event.target.value));
+    td.append(select);
+   }else{
+    td.className='editor-text-cell'+(col==='Description'?' description-cell':'')+(!row[col]?' muted':'');
+    const visibleText=document.createElement('span');visibleText.className='editor-cell-text';visibleText.textContent=row[col]||'—';
+    td.title=row[col]||'No '+col.toLowerCase();td.append(visibleText);
+   }
+   tr.append(td);
+  }
+  const td=document.createElement('td');td.className='editor-actions-cell';
+  const controls=document.createElement('div');controls.className='editor-row-actions';
+  const edit=document.createElement('button');edit.type='button';edit.className='small-btn';edit.textContent='Edit';edit.setAttribute('aria-label','Edit '+row['Item Name']);edit.addEventListener('click',()=>openEditor(index));
+  const remove=document.createElement('button');remove.type='button';remove.className='small-btn danger';remove.textContent='Delete';remove.setAttribute('aria-label','Delete '+row['Item Name']);remove.title='Delete this item (requires confirmation)';
+  remove.addEventListener('click',()=>openDeleteConfirmation(new Set([itemKey(row)]),remove));
+  controls.append(edit,remove);td.append(controls);tr.append(td);tbody.append(tr);
+ }
+ renderEditorSelection(candidates);
+ el('editorFoot').textContent=`${candidates.length} / ${items.length} rows · ${items.filter(r=>r['Body Location']==='Unknown Location').length} unassigned${activeCatalog==='build'?' · temporary PDF build':''}${dirty?' · unsaved edits':''}`;
+}
+function changeEditorLocation(index,value){
+ const previous=items[index];if(!previous)return;
+ if(previous['Body Location']===value)return;
+ const location=canonicalLocation(value);
+ if(!location){notify('Choose a valid Body Location.');renderEditor();return}
+ const updated={...previous,'Body Location':location};
+ try{validate([updated])}catch(error){notify(error.message);renderEditor();return}
+ items[index]=updated;
+ if(location==='Unknown Location'&&equipped.delete(itemKey(previous)))persistPersonal();
+ dirty=true;
+ // Preserve the editor's scroll position when a filtered row disappears.
+ const editorContainer=document.querySelector('.editor-content');
+ const scroll=editorContainer.scrollTop;
+ renderAll();
+ editorContainer.scrollTop=scroll;
+ const following=editorContainer.querySelector('.editor-location-select[data-row-index="'+index+'"]') || editorContainer.querySelector('.editor-location-select');
+ if(following)following.focus({preventScroll:true});
+ notify(location==='Unknown Location'?'Item marked inactive. Save to CSV to persist.':'Body Location set to '+location+'. Save to CSV to persist.');
+}
+function renderEditorSelection(candidates=filteredEditorRows()){
+ const count=selectedEditorKeys.size,box=el('editorSelectAll');
+ const selectedVisible=candidates.filter(({row})=>selectedEditorKeys.has(itemKey(row))).length;
+ box.checked=candidates.length>0&&selectedVisible===candidates.length;
+ box.indeterminate=selectedVisible>0&&selectedVisible<candidates.length;
+ box.disabled=!candidates.length;
+ const button=el('editorDelete');button.disabled=count===0;button.textContent=count?`Delete selected (${count})`:'Delete selected';
+}
+let pendingDelete=null;
+function openDeleteConfirmation(specificKeys=null,returnTo=null){
+ // The item card supplies a Set, while a table-row button also supplies its focus target.
+ const fromDetails=specificKeys instanceof Set&&!returnTo;
+ const keys=specificKeys instanceof Set?specificKeys:new Set(selectedEditorKeys);
+ if(!keys.size)return;
+ const rows=items.filter(item=>keys.has(itemKey(item)));if(!rows.length)return;
+ pendingDelete={keys:new Set(keys),fromDetails,returnTo};
+ const names=rows.map(i=>i['Item Name']);
+ el('deleteTitle').textContent=`Delete ${rows.length} ${rows.length===1?'item':'items'}?`;
+ el('deleteDescription').textContent=`${names.slice(0,4).join(', ')}${names.length>4?` and ${names.length-4} more`:''}. Remove ${rows.length===1?'this entry':'these entries'} from the working catalog? Export your edited CSV afterward to make the deletion permanent.`;
+ el('deleteScrim').classList.add('open');el('deleteNo').focus();
+}
+function closeDeleteConfirmation(restoreFocus=true){
+ const fromDetails=pendingDelete?.fromDetails,returnTo=pendingDelete?.returnTo;
+ pendingDelete=null;el('deleteScrim').classList.remove('open');
+ if(restoreFocus){
+  if(returnTo?.isConnected)returnTo.focus();
+  else if(fromDetails&&el('detailScrim').classList.contains('open'))el('detailDelete').focus();
+  else if(!el('dataView').hidden)el('editorDelete').focus();
+  else el('addBtn').focus();
+ }
+}
+function confirmDeleteSelected(){
+ const request=pendingDelete;if(!request)return;
+ const removal=request.keys,deleted=items.filter(i=>removal.has(itemKey(i)));
+ if(!deleted.length){closeDeleteConfirmation();return}
+ items=items.filter(i=>!removal.has(itemKey(i)));
+ for(const row of deleted){saved.delete(itemKey(row));equipped.delete(itemKey(row));selectedEditorKeys.delete(itemKey(row))}
+ const fromDetails=request.fromDetails;
+ if(fromDetails)closeDetails(false);
+ persistPersonal();dirty=true;closeDeleteConfirmation(false);renderAll();
+ if(fromDetails)el('addBtn').focus();
+ notify(`Deleted ${deleted.length} ${deleted.length===1?'item':'items'} from the working catalog. Export edited CSV to persist.`);
+}
+
+function renderAll(){renderToolbar();renderSources();renderItemFilters();renderZones();renderCollection();renderEditor()}
+function initZoneControls(){
+ const sides=[['leftZones',['Head','Eyes & Face','Neck','Arms','Hands','Fingers','Waist','Containers']],['rightZones',['Ears','Shoulders','Chest & Torso','Charms/Pins/Baubles','Legs','Feet','Back','Skin & Tattoos']]];
+ for(const [target,list] of sides){const wrap=el(target);for(const name of list){
+  const z=zoneDisplay(name),b=document.createElement('button');b.type='button';b.className='zone-btn'+(z.parent?' subzone':'');b.dataset.zone=name;
+  const label=document.createElement('span');label.className='zone-label';label.textContent=z.short;const count=document.createElement('em');count.textContent='0';b.append(label,count);
+  b.setAttribute('aria-label','Lock '+name);
+  b.addEventListener('mouseenter',()=>previewZone(name));b.addEventListener('focus',()=>previewZone(name));b.addEventListener('click',()=>clickZone(name));wrap.append(b);
+ }}
+ document.querySelectorAll('svg [data-zone]').forEach(node=>{
+  const zone=zoneFromElement[node.dataset.zone];
+  node.addEventListener('mouseenter',()=>previewZone(zone));node.addEventListener('focus',()=>previewZone(zone));node.addEventListener('click',()=>clickZone(zone));
+  node.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();clickZone(zone)}});
+ });
+}
+function previewZone(zone){
+ if(!ZONES.some(z=>z.name===zone)||lockedZone||savedOnly||viewAll)return;
+ selected=zone;textQuery='';el('search').value='';renderZones();renderCollection();
+}
+function clickZone(zone){
+ if(!ZONES.some(z=>z.name===zone))return;
+ lockedZone=lockedZone===zone?null:zone;
+ selected=zone;savedOnly=false;viewAll=false;textQuery='';el('search').value='';
+ renderZones();renderCollection();
+}
+function openEditor(index=-1){
+ if(!el('characterScrim').classList.contains('open'))pendingCharacterCatalogAdd=null;
+ editIndex=index;returnFocus=document.activeElement;
+ const editing=index>=0,record=editing?items[index]:{'Item Name':'','Body Location':selected,'Rarity':'Uncommon','Attunement':'No','Source':'','Description':'','D&D Beyond URL':''};
+ el('modalTitle').textContent=editing?'Edit magic item':'Add magic item';
+ el('modalDescription').textContent=editing?'Update item details and description. Save to CSV when finished.':'Create a catalog row with an optional source and description.';
+ el('applyBtn').textContent=editing?'Apply changes':'Add to catalog';
+ el('fieldName').value=record['Item Name'];el('fieldZone').value=record['Body Location'];el('fieldRarity').value=record.Rarity;el('fieldAttune').value=record.Attunement;el('fieldSource').value=record.Source;el('fieldDescription').value=record.Description||'';el('fieldDDBUrl').value=record['D&D Beyond URL']||'';
+ el('modalScrim').classList.add('open');el('fieldName').focus();
+}
+function closeEditor(){el('modalScrim').classList.remove('open');el('modalScrim').classList.remove('character-add-front');pendingCharacterCatalogAdd=null;if(returnFocus&&returnFocus.isConnected)returnFocus.focus();else if(el('characterScrim').classList.contains('open'))el('characterResults').focus();else el('editorAdd').focus()}
+function openDetails(index){
+ const row=items[index];if(!row)return;
+ detailIndex=index;detailReturnFocus=document.activeElement;
+ el('detailTitle').textContent=row['Item Name'];
+ const meta=el('detailMetadata');meta.replaceChildren();
+ for(const [label,value] of [['Rarity',row.Rarity],['Body Location',row['Body Location']],['Attunement',row.Attunement==='Yes'?'Required':row.Attunement==='No'?'Not required':'Unknown'],['Source',row.Source||'Not specified']]){
+  const tag=document.createElement('div');tag.className='detail-pill';
+  const head=document.createElement('strong');head.textContent=label;
+  const data=document.createElement('span');data.textContent=value;tag.append(head,data);meta.append(tag);
+ }
+ el('detailDescription').textContent=row.Description||'No description has been added to this item yet. Use Edit item to enter your own summary or rules notes.';
+ el('detailDescription').classList.toggle('is-empty',!row.Description);
+ const ddbLink=el('detailDDBLink'),url=row['D&D Beyond URL']||'';
+ if(validDDBUrl(url)&&url){ddbLink.href=url;ddbLink.style.display='inline-flex';}else{ddbLink.removeAttribute('href');ddbLink.style.display='none';}
+ el('detailScrim').classList.add('open');el('detailClose').focus();
+}
+function closeDetails(restore=true){
+ el('detailScrim').classList.remove('open');detailIndex=-1;
+ if(restore&&detailReturnFocus&&detailReturnFocus.isConnected)detailReturnFocus.focus();
+}
+
+function applyForm(event){
+ event.preventDefault();
+ const newRow={'Item Name':el('fieldName').value.trim(),'Body Location':el('fieldZone').value,'Rarity':el('fieldRarity').value,'Attunement':el('fieldAttune').value,'Source':el('fieldSource').value.trim(),'Description':el('fieldDescription').value.trim(),'D&D Beyond URL':el('fieldDDBUrl').value.trim()};
+ try{validate([newRow]);
+  if(items.some((item,index)=>index!==editIndex&&itemKey(item)===itemKey(newRow)))throw Error('An item with that name and source already exists.');
+  if(editIndex>=0){
+   const previous=itemKey(items[editIndex]),updated=itemKey(newRow);
+   if(previous!==updated){
+    if(saved.delete(previous))saved.add(updated);
+    if(equipped.delete(previous))equipped.add(updated);
+    persistPersonal();
+   }
+   if(selectedEditorKeys.delete(previous))selectedEditorKeys.add(updated);
+   items[editIndex]=newRow;
+  }else items.push(newRow);
+  selected=newRow['Body Location'];viewAll=false;if(lockedZone!==selected)lockedZone=null;
+  textQuery='';sourceSelection=null;savedOnly=false;attunementFilter='Any';rarityFilter='Any';el('search').value='';
+  const fromCharacter=Boolean(pendingCharacterCatalogAdd);
+  dirty=true;closeEditor();renderAll();
+  if(fromCharacter){refreshCharacterAfterCatalogChange();characterMessage('Item added to the working catalog. Review the refreshed comparison. Use Apply equipped items to equip matches; Export Edited CSV to save the catalog.');}
+  notify(editIndex>=0?'Item updated. Export Edited CSV to persist.':'Item added. Export Edited CSV to persist.');
+ }catch(error){notify(error.message)}
+}
+// Standalone file:// HTML uses the standard browser file chooser. Opening it
+// synchronously from a real click keeps the user gesture intact in Chrome,
+// Edge, Firefox and other browsers. The optional File System Access picker
+// introduced in v18/v19 could fail without opening a fallback chooser.
+function chooseCatalogCSV(){
+ const input=el('importFile');
+ input.value=''; // Re-importing the same filename must still trigger change.
+ input.click();
+}
+function saveCSV(){
+ try{items=validate(items);downloadCSV()}
+ catch(error){notify('Export failed: '+error.message)}
+}
+async function importCSV(file){
+ if(!file)return;
+ if(csvItems.length>0&&!confirm(csvDirty||(activeCatalog==='csv'&&dirty)?'Importing will replace the CSV catalog and DISCARD its unsaved edits. The temporary PDF build stays separate. Continue?':'Importing will replace the working CSV catalog. Any temporary PDF build is preserved. Continue?'))return;
+ try{
+  const csv=await file.text();const imported=parseCSV(csv);
+  rememberActiveCatalog();
+  csvItems=imported;csvDirty=false;activeCatalog='csv';items=csvItems;saved=csvSaved;equipped=csvEquipped;dirty=false;
+  resetCatalogControls();renderAll();notify(`Imported ${items.length} CSV entries. Any temporary PDF build remains separate.`);
+ }catch(error){notify('Import failed: '+error.message)}
+}
+
+/* v26: Show every equipped item in one in-app list, independent of the current region and Collection filters. */
+function renderEquippedList(){
+ const entries=wearableExportEntries();
+ const total=entries.length;
+ el('equippedListSubtitle').textContent=`${total} ${total===1?'item':'items'} equipped · grouped by body location`;
+ const wrap=el('equippedListContents');wrap.replaceChildren();
+ if(!total){
+  const empty=document.createElement('div');empty.className='equipped-empty';
+  empty.textContent='No items equipped yet. Use Equip on any item in The Collection to add it here.';
+  wrap.append(empty);return;
+ }
+ const groups=new Map();
+ for(const row of entries){
+  const location=row['Body Location'];
+  if(!groups.has(location))groups.set(location,[]);
+  groups.get(location).push(row);
+ }
+ for(const [location,rows] of groups){
+  const section=document.createElement('section');section.className='equipped-location';
+  const head=document.createElement('div');head.className='equipped-location-heading';
+  const title=document.createElement('h4');
+  title.textContent=location==='Fingers'?'Hands / Fingers · Rings':location;
+  const count=document.createElement('span');count.textContent=`${rows.length} ${rows.length===1?'item':'items'}`;
+  head.append(title,count);
+  const list=document.createElement('ul');
+  for(const row of rows){const li=document.createElement('li');li.textContent=row['Item Name'];list.append(li)}
+  section.append(head,list);wrap.append(section);
+ }
+}
+function openEquippedList(){
+ renderEquippedList();
+ el('equippedListScrim').classList.add('open');
+ el('equippedListCloseIcon').focus();
+}
+function closeEquippedList(){
+ el('equippedListScrim').classList.remove('open');
+ el('openEquippedList').focus();
+}
+
+/* v12: self-contained, offline export of equipped items as an image-backed PDF or JPEG. */
+// Export is one horizontally expanding sheet: body panel + as many item columns as needed.
+const EXPORT_H=1000, EXPORT_BODY_W=346, EXPORT_COL_W=616, EXPORT_COL_GAP=16;
+const EXPORT_ITEM_X=EXPORT_BODY_W+40, EXPORT_PDF_H=720;
+
+function wearableExportEntries(){
+ const order=new Map(LOCATION_OPTIONS.map((z,i)=>[z,i]));
+ return items.filter(row=>row['Body Location']!=='Unknown Location'&&equipped.has(itemKey(row)))
+  .sort((a,b)=>(order.get(a['Body Location'])??99)-(order.get(b['Body Location'])??99)||a['Item Name'].localeCompare(b['Item Name']));
+}
+
+async function exportFigureImage(wornZones){
+ const source=document.querySelector('.figure-svg');
+ const svg=source.cloneNode(true);
+ svg.setAttribute('width','400');svg.setAttribute('height','690');
+ svg.setAttribute('xmlns','http://www.w3.org/2000/svg');
+ svg.removeAttribute('class');
+ svg.querySelectorAll('[tabindex],[role],[aria-label]').forEach(node=>{
+  node.removeAttribute('tabindex');node.removeAttribute('role');node.removeAttribute('aria-label');
+ });
+ svg.querySelectorAll('.body-etch').forEach(node=>{node.setAttribute('fill','#22352d');node.setAttribute('stroke','#91a18e');node.setAttribute('stroke-opacity','.72');node.setAttribute('stroke-width','1.7')});
+ svg.querySelectorAll('.body-detail').forEach(node=>{node.setAttribute('fill','none');node.setAttribute('stroke','#91a18e');node.setAttribute('stroke-opacity','.63');node.setAttribute('stroke-width','1.35')});
+ svg.querySelectorAll('.outer-mark').forEach(node=>{node.setAttribute('fill','none');node.setAttribute('stroke','#738675');node.setAttribute('stroke-opacity','.5');node.setAttribute('stroke-width','1.3')});
+ svg.querySelectorAll('.figure-label').forEach(node=>{node.setAttribute('fill','#e8d4a8');node.setAttribute('font-family','Arial,sans-serif');node.setAttribute('font-weight','bold');if(!node.hasAttribute('font-size'))node.setAttribute('font-size','12')});
+ svg.querySelectorAll('.pouch-detail').forEach(node=>{node.setAttribute('fill','none');node.setAttribute('stroke','#d0bd92');node.setAttribute('stroke-width','2');node.setAttribute('stroke-linecap','round')});
+ svg.querySelectorAll('.pouch-stitch').forEach(node=>{node.setAttribute('fill','none');node.setAttribute('stroke','#879b81');node.setAttribute('stroke-width','1.2')});
+ svg.querySelectorAll('[data-zone]').forEach(group=>{
+  const active=wornZones.has(zoneFromElement[group.dataset.zone]||group.dataset.zone);
+  group.removeAttribute('class');
+  group.querySelectorAll('.spot').forEach(shape=>{
+   shape.removeAttribute('class');shape.removeAttribute('style');
+   shape.setAttribute('fill',active?'#14345b':group.dataset.zone==='charms'?'#6a5734':'#4d6953');
+   shape.setAttribute('fill-opacity',active?'1':'.24');
+   shape.setAttribute('stroke',active?'#edc778':'#9da995');
+   shape.setAttribute('stroke-opacity',active?'1':'.8');
+   shape.setAttribute('stroke-width',active?'2.5':'1.4');
+  });
+ });
+ const blob=new Blob([new XMLSerializer().serializeToString(svg)],{type:'image/svg+xml;charset=utf-8'});
+ const url=URL.createObjectURL(blob);
+ try{
+  const picture=new Image();picture.decoding='async';picture.src=url;
+  await new Promise((resolve,reject)=>{picture.onload=resolve;picture.onerror=()=>reject(Error('Unable to render the wearer figure.'))});
+  return picture;
+ }finally{URL.revokeObjectURL(url)}
+}
+
+function wrapExportText(ctx,text,maxWidth){
+ const words=String(text).split(/\s+/).filter(Boolean),lines=[];let line='';
+ for(const word of words){
+  const candidate=line?line+' '+word:word;
+  if(line&&ctx.measureText(candidate).width>maxWidth){lines.push(line);line=word}else line=candidate;
+  if(ctx.measureText(line).width>maxWidth){
+   const chars=Array.from(line);line='';
+   for(const ch of chars){if(line&&ctx.measureText(line+ch).width>maxWidth){lines.push(line);line=''}line+=ch}
+  }
+ }
+ if(line)lines.push(line);
+ return lines.length?lines:[''];
+}
+
+function exportLayout(entries){
+ const measure=document.createElement('canvas').getContext('2d');
+ if(!measure)throw Error('Unable to measure equipment text.');
+ measure.font='22px Georgia,serif';
+ const groups=new Map();
+ for(const row of entries){
+  const zone=row['Body Location'];
+  if(!groups.has(zone))groups.set(zone,[]);
+  groups.get(zone).push(row);
+ }
+ // Compact spacing: everything that fits stays in the first list column.
+ // Once a column is full, flow into the NEXT COLUMN to the right (not below).
+ const columns=[[]],top=98,bottom=950,headingH=23,spaceBetweenGroups=11;
+ let y=top, col=0;
+ const nextColumn=()=>{columns.push([]);col++;y=top};
+ const heading=(zone,count,continued=false)=>{
+  columns[col].push({type:'zone',zone:continued?zone+' (continued)':zone,count:continued?null:count,y});
+  y+=headingH;
+ };
+ for(const [zone,list] of groups){
+  const label=zone==='Fingers'?'Hands / Fingers · Rings':zone;
+  const firstLines=wrapExportText(measure,list[0]['Item Name'],EXPORT_COL_W-68);
+  const firstHeight=Math.max(30,firstLines.length*28+3);
+  if(y+headingH+firstHeight>bottom&&columns[col].length)nextColumn();
+  heading(label,list.length);
+  for(const row of list){
+   const lines=wrapExportText(measure,row['Item Name'],EXPORT_COL_W-68);
+   const height=Math.max(30,lines.length*28+3);
+   if(y+height>bottom&&columns[col].length){nextColumn();heading(label,list.length,true)}
+   columns[col].push({type:'item',lines,y,row});
+   y+=height;
+  }
+  y+=spaceBetweenGroups;
+ }
+ const width=EXPORT_ITEM_X+columns.length*EXPORT_COL_W+(columns.length-1)*EXPORT_COL_GAP+28;
+ // A single JPG canvas and a single PDF page, regardless of column count.
+ // Very large inventories still have a clear browser canvas-width limit.
+ if(width>16000)throw Error('This equipment list is too wide for one image; unequip some items before exporting.');
+ return {columns,width,height:EXPORT_H};
+}
+
+function roundedExportRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r)}
+function paintExportSheet(ctx,layout,entries,model,underlineLinks=false){
+ const W=layout.width,H=layout.height;
+ const bg=ctx.createLinearGradient(0,0,W,H);
+ bg.addColorStop(0,'#20382a');bg.addColorStop(.52,'#14261c');bg.addColorStop(1,'#0c1712');
+ ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+ ctx.strokeStyle='#a88a57';ctx.lineWidth=1.5;ctx.strokeRect(12,12,W-24,H-24);
+ // The figure is drawn ONCE. Subsequent item columns extend only to the right.
+ const side=ctx.createLinearGradient(28,28,340,H-28);
+ side.addColorStop(0,'#20362b');side.addColorStop(1,'#14241b');
+ roundedExportRect(ctx,24,24,EXPORT_BODY_W-24,H-48,12);
+ ctx.fillStyle=side;ctx.fill();ctx.lineWidth=1.2;ctx.strokeStyle='#597255';ctx.stroke();
+ ctx.fillStyle='#e9c77e';ctx.font='bold 18px Arial,sans-serif';
+ ctx.fillText('THE WEARER',47,68);
+ ctx.fillStyle='#b8c9b8';ctx.font='17px Arial,sans-serif';
+ ctx.fillText(`${entries.length} equipped ${entries.length===1?'item':'items'}`,47,96);
+ const glow=ctx.createRadialGradient(182,448,45,182,448,290);
+ glow.addColorStop(0,'#39503a');glow.addColorStop(1,'#192a2100');
+ ctx.fillStyle=glow;ctx.fillRect(28,120,310,650);
+ ctx.drawImage(model,27,143,310,535);
+ ctx.fillStyle='#14345b';roundedExportRect(ctx,48,793,20,20,3);ctx.fill();
+ ctx.strokeStyle='#edc778';ctx.lineWidth=1.6;ctx.stroke();
+ ctx.fillStyle='#bfcebd';ctx.font='15px Arial,sans-serif';
+ ctx.fillText('Blue and gold = equipped',79,809);
+ // Compact item columns contain no page headers, footers, or repeated mannequin.
+ layout.columns.forEach((commands,index)=>{
+  const x=EXPORT_ITEM_X+index*(EXPORT_COL_W+EXPORT_COL_GAP);
+  roundedExportRect(ctx,x,24,EXPORT_COL_W,H-48,12);
+  ctx.fillStyle='#17291f';ctx.fill();ctx.strokeStyle='#567052';ctx.lineWidth=1.2;ctx.stroke();
+  ctx.fillStyle='#e9c77e';ctx.font='bold 18px Arial,sans-serif';
+  ctx.fillText(index===0?'EQUIPPED ITEMS':'EQUIPPED ITEMS · CONTINUED',x+20,69);
+  for(const cmd of commands){
+   if(cmd.type==='zone'){
+    ctx.fillStyle='#d6b876';ctx.font='bold 18px Arial,sans-serif';
+    ctx.fillText(cmd.zone.toUpperCase(),x+21,cmd.y+15);
+    if(cmd.count!==null){
+     ctx.fillStyle='#a5bba9';ctx.font='14px Arial,sans-serif';ctx.textAlign='right';
+     ctx.fillText(`${cmd.count} ${cmd.count===1?'item':'items'}`,x+EXPORT_COL_W-22,cmd.y+15);
+     ctx.textAlign='left';
+    }
+    ctx.fillStyle='#50684f';ctx.fillRect(x+20,cmd.y+22,EXPORT_COL_W-40,1);
+   }else{
+    ctx.fillStyle='#e9c77e';ctx.beginPath();ctx.arc(x+26,cmd.y+17,3,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#f1ebd9';ctx.font='22px Georgia,serif';
+    cmd.lines.forEach((line,n)=>{
+      const textX=x+42,textY=cmd.y+24+n*28;
+      ctx.fillText(line,textX,textY);
+      // Only the PDF gets the visual underline: JPEG images cannot be linked.
+      if(underlineLinks&&cmd.row?.['D&D Beyond URL']&&validDDBUrl(cmd.row['D&D Beyond URL'])){
+       ctx.beginPath();ctx.moveTo(textX,textY+4);
+       ctx.lineTo(Math.min(x+EXPORT_COL_W-22,textX+ctx.measureText(line).width),textY+4);
+       ctx.lineWidth=1;ctx.strokeStyle='#e9c77e';ctx.stroke();
+      }
+     });
+   }
+  }
+ });
+}
+
+async function buildEquippedSheet(entries,layout=exportLayout(entries),underlineLinks=false){
+ const figure=await exportFigureImage(new Set(entries.map(e=>e['Body Location'])));
+ const canvas=document.createElement('canvas');
+ canvas.width=layout.width;canvas.height=layout.height;
+ const ctx=canvas.getContext('2d',{alpha:false});
+ if(!ctx)throw Error('Canvas export is unavailable in this browser.');
+ paintExportSheet(ctx,layout,entries,figure,underlineLinks);
+ return canvas;
+}
+
+function jpegBlob(canvas,quality=.91){return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(Error('Unable to encode JPEG.')),'image/jpeg',quality))}
+function downloadEquipmentFile(blob,name){
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),20000);
+}
+// PDF 1.4, with actual URI link annotations and an uncompressed, embedded JSON
+// attachment (Associated File) for lossless, offline round-trip build imports.
+// This does not depend on external PDF services, scripts, or libraries.
+function pdfHexString(value){return '<'+Array.from(new TextEncoder().encode(String(value)),b=>b.toString(16).padStart(2,'0')).join('')+'>'}
+function pdfFromJpeg(raw,imageWidth,imageHeight,layout,entries){
+ const encoder=new TextEncoder(),chunks=[];let length=0;const offsets=[];
+ const put=value=>{const bytes=typeof value==='string'?encoder.encode(value):value;chunks.push(bytes);length+=bytes.length};
+ const begin=n=>{offsets[n]=length;put(`${n} 0 obj\n`)};
+ const end=()=>put('endobj\n');
+ const pageHeight=EXPORT_PDF_H,pageWidth=+(pageHeight*imageWidth/imageHeight).toFixed(3);
+ const sx=pageWidth/imageWidth,sy=pageHeight/imageHeight;
+ const buildJson={format:'arcane-wardrobe-build',version:1,exportedAt:new Date().toISOString(),
+  app:'The Arcane Wardrobe',items:entries.map(row=>Object.fromEntries(COLUMNS.map(col=>[col,row[col]??''])))};
+ const jsonBytes=encoder.encode(JSON.stringify(buildJson));
+ const links=[];
+ layout.columns.forEach((commands,columnIndex)=>{
+  const x=EXPORT_ITEM_X+columnIndex*(EXPORT_COL_W+EXPORT_COL_GAP);
+  for(const cmd of commands){
+   if(cmd.type!=='item')continue;
+   const url=cmd.row['D&D Beyond URL']||'';
+   if(!url||!validDDBUrl(url))continue;
+   const rowHeight=Math.max(30,cmd.lines.length*28+3);
+   links.push({url,name:cmd.row['Item Name'],rect:[
+    +((x+39)*sx).toFixed(3),+((imageHeight-cmd.y-rowHeight)*sy).toFixed(3),
+    +((x+EXPORT_COL_W-22)*sx).toFixed(3),+((imageHeight-cmd.y)*sy).toFixed(3)]});
+  }
+ });
+ const embeddedId=6,fileSpecId=7,infoId=8;
+ const annotationIds=links.map((_,i)=>9+i);
+ const maxId=8+links.length;
+ put('%PDF-1.4\n%Arcane Wardrobe equipped build\n');
+ begin(1);put(`<< /Type /Catalog /Pages 2 0 R /Names << /EmbeddedFiles << /Names [(Arcane_Wardrobe_Build.json) ${fileSpecId} 0 R] >> >> /AF [${fileSpecId} 0 R] >>\n`);end();
+ begin(2);put('<< /Type /Pages /Kids [3 0 R] /Count 1 >>\n');end();
+ const annots=annotationIds.length?' /Annots ['+annotationIds.map(n=>`${n} 0 R`).join(' ')+']':'';
+ begin(3);put(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /XObject << /Im0 5 0 R >> >> /Contents 4 0 R${annots} >>\n`);end();
+ const commands=`q\n${pageWidth} 0 0 ${pageHeight} 0 0 cm\n/Im0 Do\nQ\n`;
+ begin(4);put(`<< /Length ${encoder.encode(commands).length} >>\nstream\n`);put(commands);put('endstream\n');end();
+ begin(5);put(`<< /Type /XObject /Subtype /Image /Width ${imageWidth} /Height ${imageHeight} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${raw.length} >>\nstream\n`);put(raw);put('\nendstream\n');end();
+ // Keep the metadata attachment uncompressed, so the standalone HTML importer
+ // can read it using File.arrayBuffer() without a PDF parser or internet access.
+ begin(embeddedId);put(`<< /Type /EmbeddedFile /Subtype /application#2Fjson /AWBuildFormat (ArcaneWardrobeBuildV1) /Length ${jsonBytes.length} /Params << /Size ${jsonBytes.length} >> >>\nstream\n`);
+ put(jsonBytes);put('\nendstream\n');end();
+ begin(fileSpecId);put(`<< /Type /Filespec /F (Arcane_Wardrobe_Build.json) /UF (Arcane_Wardrobe_Build.json) /Desc (Arcane Wardrobe equipped build data) /AFRelationship /Data /EF << /F ${embeddedId} 0 R /UF ${embeddedId} 0 R >> >>\n`);end();
+ begin(infoId);put(`<< /Title (Arcane Wardrobe - Equipped Items) /Author (The Arcane Wardrobe) /Creator (The Arcane Wardrobe HTML) /Subject (Equipped build with embedded JSON item metadata) /Keywords (Arcane Wardrobe, equipped build, JSON attachment) >>\n`);end();
+ links.forEach((link,i)=>{
+  begin(annotationIds[i]);
+  put(`<< /Type /Annot /Subtype /Link /Rect [${link.rect.join(' ')}] /Border [0 0 0] /Contents ${pdfHexString(link.name)} /A << /S /URI /URI ${pdfHexString(link.url)} >> >>\n`);
+  end();
+ });
+ const xref=length;put(`xref\n0 ${maxId+1}\n0000000000 65535 f \n`);
+ for(let id=1;id<=maxId;id++)put(`${String(offsets[id]).padStart(10,'0')} 00000 n \n`);
+ put(`trailer\n<< /Size ${maxId+1} /Root 1 0 R /Info ${infoId} 0 R >>\nstartxref\n${xref}\n%%EOF\n`);
+ return new Blob(chunks,{type:'application/pdf'});
+}
+
+// Only Arcane Wardrobe PDFs with the explicitly marked, embedded build JSON
+// may be imported. Ordinary PDFs, image exports, and arbitrary text are rejected.
+async function readBuildPDF(file){
+ if(!file||file.size>48*1024*1024)throw Error('Choose an Arcane Wardrobe PDF under 48 MB.');
+ const bytes=new Uint8Array(await file.arrayBuffer());
+ if(new TextDecoder('ascii').decode(bytes.subarray(0,8)).slice(0,5)!=='%PDF-')throw Error('This is not a PDF document.');
+ const pdfText=new TextDecoder('latin1').decode(bytes);
+ const header=/\/AWBuildFormat\s*\(ArcaneWardrobeBuildV1\)\s*\/Length\s+(\d+)\s*\/Params\s*<<[^>]*>>\s*>>\r?\nstream\r?\n/g;
+ const match=header.exec(pdfText);
+ if(!match)throw Error('No Arcane Wardrobe build attachment was found. Import a PDF exported by the updated app.');
+ const size=Number(match[1]),start=match.index+match[0].length;
+ if(!Number.isSafeInteger(size)||size<2||size>24*1024*1024||start+size>bytes.length)throw Error('The embedded build data is missing or too large.');
+ const jsonText=new TextDecoder('utf-8',{fatal:true}).decode(bytes.subarray(start,start+size));
+ const payload=JSON.parse(jsonText);
+ if(!payload||payload.format!=='arcane-wardrobe-build'||payload.version!==1||!Array.isArray(payload.items))throw Error('The PDF build format is unsupported.');
+ const rows=validate(payload.items);
+ if(!rows.length)throw Error('This PDF does not contain any equipped items.');
+ return rows;
+}
+async function importBuildPDF(file){
+ if(!file)return;
+ if(temporaryBuildItems&&(!confirm((buildDirty||(activeCatalog==='build'&&dirty))?'Replace your temporary PDF build and discard its unsaved edits? Your imported CSV will remain untouched.':'Replace the current temporary PDF build? Your CSV catalog will remain untouched.')))return;
+ try{
+  const imported=await readBuildPDF(file);
+  rememberActiveCatalog();
+  temporaryBuildItems=imported;buildDirty=false;buildSaved=new Set();
+  buildEquipped=new Set(imported.map(itemKey));activeCatalog='build';
+  items=temporaryBuildItems;dirty=false;saved=buildSaved;equipped=buildEquipped;
+  resetCatalogControls();renderAll();
+  notify(`Imported ${imported.length} equipped build items into a temporary catalog. Your CSV is unchanged.`);
+ }catch(error){notify('Build import failed: '+error.message);console.error('Build import failed',error)}
+}
+
+async function exportEquipped(format){
+ const dropdown=el('exportEquippedMenu');dropdown.open=false;
+ const entries=wearableExportEntries();
+ if(!entries.length){notify('Equip at least one item before exporting the Wearer.');return}
+ const button=el(format==='pdf'?'exportEquippedPdf':'exportEquippedJpg');button.disabled=true;
+ try{
+  const layout=exportLayout(entries);
+  const canvas=await buildEquippedSheet(entries,layout,format==='pdf');
+  const jpg=await jpegBlob(canvas);
+  if(format==='jpg')downloadEquipmentFile(jpg,'Arcane_Wardrobe_Equipped_Items.jpg');
+  else{
+   const raw=new Uint8Array(await jpg.arrayBuffer());
+   downloadEquipmentFile(pdfFromJpeg(raw,canvas.width,canvas.height,layout,entries),'Arcane_Wardrobe_Equipped_Items.pdf');
+  }
+  notify(`Exported ${entries.length} equipped ${entries.length===1?'item':'items'} as one ${format.toUpperCase()} sheet.`);
+ }catch(error){notify('Equipment export failed: '+error.message);console.error('Equipment export failed',error)}
+ finally{button.disabled=false}
+}
+
+
+/* v29: Standalone character inventory import. DDB has no supported public character API;
+   direct fetch may fail from file:// due to browser CORS. JSON file/paste always remains available.
+   DDB container IDs are distinguished from the character's root Equipment; never recurse
+   into held container contents. No character JSON is persisted or exported. */
+let characterPreview=null;
+let characterSourceDocument=null;
+let pendingCharacterCatalogAdd=null;
+const characterNameNorm=s=>String(s??'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[’‘`]/g,"'").replace(/[‐‑‒–—]/g,'-').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
+function parsePublicCharacterLink(raw){
+ const url=new URL(raw.trim());
+ if(!['https:','http:'].includes(url.protocol)||!['www.dndbeyond.com','dndbeyond.com'].includes(url.hostname)||url.username||url.password)throw Error('Enter a D&D Beyond character page URL.');
+ const match=url.pathname.match(/^\/characters\/(\d+)\/?$/);if(!match)throw Error('Use https://www.dndbeyond.com/characters/CHARACTER_ID');
+ return match[1];
+}
+function publicCharacterJsonUrl(){
+ const id=parsePublicCharacterLink(el('characterUrl').value);
+ return `https://character-service.dndbeyond.com/character/v5/character/${id}?includeCustomItems=true`;
+}
+function characterMessage(message){el('characterStatus').textContent=message}
+function isDirectEquipmentItem(item,characterId,containerIds){
+ const container=item.containerEntityId??item.containerId??item.container?.id??null;
+ const rawGroup=String(item.containerName??item.container?.name??item.inventoryGroup??'').trim();
+ if(rawGroup&&rawGroup.toLowerCase()!=='equipment')return false;
+ if(container===null||container===''||Number(container)===0)return true;
+ if(String(container)===String(characterId))return true;
+ // A container's own inventory ID always means an item is inside that container.
+ if(containerIds.has(String(container)))return false;
+ // DDB sometimes assigns an opaque root container ID. We cannot safely assume
+ // an unknown ID is the Equipment root: exclude it rather than leak bag contents.
+ return false;
+}
+function extractDDBEquipment(doc){
+ const character=doc?.data?.inventory?doc.data:doc?.character?.inventory?doc.character:doc;
+ if(!character||typeof character!=='object'||!Array.isArray(character.inventory))throw Error('JSON does not contain a D&D Beyond character inventory array.');
+ const inventory=character.inventory;
+ const characterId=String(character.id??'');
+ const containerIds=new Set(inventory.filter(it=>it&&it.id!==null&&it.id!==undefined).map(it=>String(it.id)));
+ const found=[];let skippedContainers=0,skippedUnnamed=0;
+ for(const it of inventory){
+  if(!it||typeof it!=='object')continue;
+  if(!isDirectEquipmentItem(it,characterId,containerIds)){skippedContainers++;continue}
+  const name=String(it.definition?.name??it.name??it.customName??'').trim();
+  if(!name){skippedUnnamed++;continue}
+  found.push({name,equipped:it.equipped===true||it.isEquipped===true,quantity:Math.max(1,Number(it.quantity)||1),id:it.id??null,definition:it.definition??null});
+ }
+ // Some customItems are held at root of Equipment; they are not subcontainers.
+ if(Array.isArray(character.customItems))for(const it of character.customItems){
+  if(!it||typeof it!=='object')continue;
+  if(!isDirectEquipmentItem(it,characterId,containerIds)){skippedContainers++;continue}
+  const name=String(it.name??it.definition?.name??'').trim();if(name)found.push({name,equipped:it.equipped===true||it.isEquipped===true,quantity:Math.max(1,Number(it.quantity)||1),id:it.id??null,definition:it.definition??null});
+ }
+ return {name:String(character.name??'Public character'),root:found,skippedContainers,skippedUnnamed,characterId};
+}
+function compareCharacterInventory(doc){
+ if(!items.length)throw Error('First import a CSV catalog or an Arcane Wardrobe build PDF in Data / CSV.');
+ const character=extractDDBEquipment(doc);
+ const index=new Map();
+ for(const row of items){const key=characterNameNorm(row['Item Name']);if(!index.has(key))index.set(key,[]);index.get(key).push(row)}
+ const matched=[],missing=[],inactive=[],notEquipped=[];
+ for(const row of character.root){
+  const candidate=index.get(characterNameNorm(row.name))||[];
+  if(!candidate.length){missing.push({...row,reason:'Not in Arcane Wardrobe CSV'});continue}
+  if(candidate.length!==1){missing.push({...row,reason:'Ambiguous catalog match; review manually'});continue}
+  const match=candidate[0];
+  if(match['Body Location']==='Unknown Location'){inactive.push({...row,match,reason:'In catalog; body location unassigned'});continue}
+  if(!row.equipped){notEquipped.push({...row,match});continue}
+  matched.push({...row,match});
+ }
+ return {...character,matched,missing,inactive,notEquipped};
+}
+function characterItemDefaults(entry){
+ const definition=entry.definition&&typeof entry.definition==='object'?entry.definition:{};
+ const candidate=String(definition.rarity??definition.rarityName??'').trim();
+ const rarity=RARITIES.find(r=>r.toLowerCase()===candidate.toLowerCase())||'Unknown';
+ let attunement='Unknown';
+ if(typeof definition.requiresAttunement==='boolean')attunement=definition.requiresAttunement?'Yes':'No';
+ // Explicit display names only: no numeric source IDs or guessed book titles.
+ const sourceCandidates=[definition.source?.name,definition.sourceBook?.name,definition.sourceBook,definition.book?.name];
+ const source=sourceCandidates.find(x=>typeof x==='string'&&x.trim())||'';
+ return {'Item Name':entry.name,'Body Location':'Unknown Location',Rarity:rarity,Attunement:attunement,Source:source,Description:'','D&D Beyond URL':''};
+}
+function addMissingCharacterItem(entry,trigger){
+ // The review shows all unmatched top-level Equipment items, even when their DDB
+ // equipped flag is false. Every truly missing entry should offer the Add form.
+ if(entry.reason!=='Not in Arcane Wardrobe CSV')return;
+ pendingCharacterCatalogAdd={name:entry.name};
+ openEditor(); // The same add-item card used everywhere else in Arcane Wardrobe.
+ const defaults=characterItemDefaults(entry);
+ el('fieldName').value=defaults['Item Name'];
+ el('fieldZone').value=defaults['Body Location'];
+ el('fieldRarity').value=defaults.Rarity;
+ el('fieldAttune').value=defaults.Attunement;
+ el('fieldSource').value=defaults.Source;
+ el('fieldDescription').value='';
+ el('fieldDDBUrl').value='';
+ el('modalTitle').textContent='Add character inventory item';
+ el('modalDescription').textContent='Add this item from the character’s main Equipment inventory to the working catalog. Choose its body location and review the details. It will not equip automatically; export your edited CSV afterward to save it.';
+ el('modalScrim').classList.add('character-add-front');
+ el('fieldZone').focus();
+}
+function refreshCharacterAfterCatalogChange(){
+ if(!characterSourceDocument)return;
+ try{
+  characterPreview=compareCharacterInventory(characterSourceDocument);
+  renderCharacterComparison(characterPreview);
+ }catch(error){characterPreview=null;el('characterApply').disabled=true;characterMessage(error.message)}
+}
+function characterSection(title,records,location){
+ const section=document.createElement('section');section.className='character-group';
+ const h=document.createElement('h4');h.textContent=title;section.append(h);
+ if(!records.length){const p=document.createElement('div');p.className='character-empty';p.textContent='None';section.append(p);return section}
+ for(const entry of records){
+  const row=document.createElement('div');row.className='character-result-row';
+  const text=document.createElement('div');text.className='character-result-text';
+  const name=document.createElement('strong');name.textContent=entry.name+(entry.quantity>1?` ×${entry.quantity}`:'');
+  const note=document.createElement('small');note.textContent=location?(entry.match?.['Body Location']||'Unknown Location'):(entry.reason==='Not in Arcane Wardrobe CSV'?(entry.equipped?'Equipped on character':'In Equipment · not equipped'):entry.reason||'Not equipped on D&D Beyond');
+  text.append(name,note);row.append(text);
+  if(!location&&entry.reason==='Not in Arcane Wardrobe CSV'){
+   const actions=document.createElement('span');actions.className='character-result-controls';
+   const add=document.createElement('button');add.type='button';add.className='ghost';
+   add.textContent='+ Add to Database';add.setAttribute('aria-label',`Add ${entry.name} to current CSV database`);add.title=`Add ${entry.name} to Arcane Wardrobe`;
+   add.addEventListener('click',()=>addMissingCharacterItem(entry,add));
+   actions.append(add);row.append(actions);row.classList.add('character-result-addable');
+  }
+  section.append(row);
+ }
+ return section;
+}
+function renderCharacterComparison(result){
+ const wrap=el('characterResults');wrap.replaceChildren();
+ const locs=new Map();
+ for(const entry of result.matched){const loc=entry.match['Body Location'];if(!locs.has(loc))locs.set(loc,[]);locs.get(loc).push(entry)}
+ const order=new Map(LOCATION_OPTIONS.map((loc,i)=>[loc,i]));
+ for(const loc of [...locs.keys()].sort((a,b)=>(order.get(a)??99)-(order.get(b)??99))){
+  const section=characterSection(loc,locs.get(loc),true);wrap.append(section);
+ }
+ if(!result.matched.length)wrap.append(characterSection('Matched & equipped',[],true));
+ wrap.append(characterSection('Not in CSV / needs review — use Add to Database',result.missing));
+ if(result.inactive.length)wrap.append(characterSection('In CSV, but location unassigned',result.inactive));
+ if(result.notEquipped.length)wrap.append(characterSection('In CSV, but not equipped on D&D Beyond',result.notEquipped));
+ el('characterCounts').textContent=`${result.name} · ${result.matched.length} equipped matches · ${result.missing.length} not matched · ${result.skippedContainers} container entries excluded`;
+ el('characterApply').disabled=!result.matched.length;
+ const warning=result.skippedContainers?` ${result.skippedContainers} contained/uncertain-location entries excluded.`:'';
+ characterMessage(`Compared ${result.root.length} main Equipment entries. Matched equipped items: ${result.matched.length}; missing: ${result.missing.length}; in catalog but not equipped: ${result.notEquipped.length}; unassigned: ${result.inactive.length}.${warning}`);
+}
+function loadCharacterDocument(parsed){
+ characterPreview=null;el('characterApply').disabled=true;
+ characterSourceDocument=parsed;
+ characterPreview=compareCharacterInventory(parsed);renderCharacterComparison(characterPreview);
+}
+function openCharacterImporter(){
+ el('characterScrim').classList.add('open');
+ el('characterUrl').focus();
+}
+function closeCharacterImporter(){el('characterScrim').classList.remove('open');el('characterImportBtn').focus()}
+async function tryFetchCharacter(){
+ let url;
+ try{url=publicCharacterJsonUrl()}catch(error){characterMessage(error.message);return}
+ characterPreview=null;el('characterApply').disabled=true;
+ characterMessage('Attempting direct public read…');
+ const abort=new AbortController();const timeout=setTimeout(()=>abort.abort(),10000);
+ try{
+  const response=await fetch(url,{signal:abort.signal,credentials:'omit',redirect:'follow'});
+  if(!response.ok)throw Error(`Character service returned ${response.status}.`);
+  loadCharacterDocument(await response.json());
+ }catch(error){characterMessage(`Direct fetch unavailable (${error.message}). This is common for standalone HTML due to cross-origin restrictions. Use Open JSON, then choose the downloaded JSON file or paste its contents.`)}
+ finally{clearTimeout(timeout)}
+}
+function initCharacterImporter(){
+ el('characterImportBtn').addEventListener('click',openCharacterImporter);
+ el('characterCloseIcon').addEventListener('click',closeCharacterImporter);
+ el('characterCancel').addEventListener('click',closeCharacterImporter);
+ el('characterScrim').addEventListener('click',e=>{if(e.target===el('characterScrim'))closeCharacterImporter()});
+ el('characterUrl').value='https://www.dndbeyond.com/characters/134559170';
+ el('characterFetch').addEventListener('click',tryFetchCharacter);
+ el('characterJsonPage').addEventListener('click',()=>{try{window.open(publicCharacterJsonUrl(),'_blank','noopener,noreferrer')}catch(error){characterMessage(error.message)}});
+ el('characterLoadFile').addEventListener('click',()=>{el('characterFile').value='';el('characterFile').click()});
+ el('characterFile').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{if(file.size>12*1024*1024)throw Error('File is too large (12 MB maximum).');loadCharacterDocument(JSON.parse(await file.text()))}catch(err){characterMessage('Could not import JSON: '+err.message)}});
+ el('characterComparePaste').addEventListener('click',()=>{try{loadCharacterDocument(JSON.parse(el('characterPaste').value))}catch(err){characterMessage('Could not compare JSON: '+err.message)}});
+ el('characterApply').addEventListener('click',()=>{
+  if(!characterPreview||!characterPreview.matched.length)return;
+  const prior=availableEquipped(),next=characterPreview.matched.length;
+  if(!confirm(`Replace ${prior} current equipped selections with ${next} matched equipped item(s) from ${characterPreview.name}? No catalog items will be added or deleted.`))return;
+  equipped=new Set(characterPreview.matched.map(e=>itemKey(e.match)));persistPersonal();renderZones();renderCollection();renderEquippedList();
+  characterMessage(`Applied ${next} matched equipped item(s). CSV catalog unchanged.`);notify(`Equipped ${next} matched items from character import.`);
+ });
+}
+
+const COLLECTION_TEXT_SIZE_KEY='arcane-wardrobe-collection-text-size-v1';
+const COLLECTION_TEXT_SIZES=new Set(['50','75','100','150','200','250','300']);
+function setCollectionTextSize(value){
+ const percent=COLLECTION_TEXT_SIZES.has(String(value))?String(value):'100';
+ el('collectionTextSize').value=percent;
+ el('itemGrid').style.setProperty('--collection-text-scale',String(Number(percent)/100));
+ try{localStorage.setItem(COLLECTION_TEXT_SIZE_KEY,percent)}catch{}
+}
+function setupCollectionTextSize(){
+ let initial='100';try{initial=localStorage.getItem(COLLECTION_TEXT_SIZE_KEY)||'100'}catch{}
+ setCollectionTextSize(initial);
+ el('collectionTextSize').addEventListener('change',e=>setCollectionTextSize(e.target.value));
+}
+
+const EDITOR_TEXT_SIZE_KEY='arcane-wardrobe-editor-text-size-v1';
+const EDITOR_TEXT_SIZES=new Set(['50','75','100','150','200','250','300']);
+function setEditorTextSize(value){
+ const percent=EDITOR_TEXT_SIZES.has(String(value))?String(value):'100';
+ el('editorTextSize').value=percent;
+ el('editorTable').style.setProperty('--editor-row-font-size', (12*Number(percent)/100)+'px');
+ // Natural table-row height is set by the tallest cell control/text plus 5px
+ // on each side, rather than an arbitrary height scaled from a 50px row.
+ // At large text sizes, reserve room for both full-size action buttons.
+ requestAnimationFrame(applyEditorColumnWidths);
+ try{localStorage.setItem(EDITOR_TEXT_SIZE_KEY,percent)}catch{}
+}
+function setupEditorTextSize(){
+ let initial='100';try{initial=localStorage.getItem(EDITOR_TEXT_SIZE_KEY)||'100'}catch{}
+ setEditorTextSize(initial);
+ el('editorTextSize').addEventListener('change',e=>setEditorTextSize(e.target.value));
+}
+function setupMatchedFooters(){
+ const wearer=document.querySelector('.wardrobe-view .figure-foot');
+ const sync=()=>document.documentElement.style.setProperty('--wearer-footer-height',Math.ceil(wearer.getBoundingClientRect().height)+'px');
+ sync();
+ if(typeof ResizeObserver!=='undefined')new ResizeObserver(sync).observe(wearer);
+ else window.addEventListener('resize',sync);
+}
+function attachEvents(){
+ el('openEquippedList').addEventListener('click',openEquippedList);
+ el('equippedListCloseIcon').addEventListener('click',closeEquippedList);
+ el('equippedListClose').addEventListener('click',closeEquippedList);
+ el('equippedListScrim').addEventListener('click',event=>{if(event.target===el('equippedListScrim'))closeEquippedList()});
+ el('exportEquippedPdf').addEventListener('click',()=>exportEquipped('pdf'));
+ el('exportEquippedJpg').addEventListener('click',()=>exportEquipped('jpg'));
+ document.addEventListener('click',event=>{if(!el('exportEquippedMenu').contains(event.target))el('exportEquippedMenu').open=false});
+ el('openDataTab').addEventListener('click',()=>showView(el('dataView').hidden?'data':'wardrobe'));
+ el('search').addEventListener('input',e=>{textQuery=e.target.value;renderCollection()});
+ el('viewAllBtn').addEventListener('click',()=>{
+  viewAll=true;lockedZone=null;savedOnly=false;textQuery='';sourceSelection=null;attunementFilter='Any';rarityFilter='Any';
+  el('search').value='';el('sourceMenu').open=false;el('filtersMenu').open=false;
+  renderSources();renderItemFilters();renderZones();renderCollection();
+ });
+  el('displayMode').addEventListener('change',e=>applyDisplayMode(e.target.value));
+  el('attunementFilter').addEventListener('change',e=>{attunementFilter=e.target.value;renderItemFilters();renderCollection()});
+  el('rarityFilter').addEventListener('change',e=>{rarityFilter=e.target.value;renderItemFilters();renderCollection()});
+  el('clearItemFilters').addEventListener('click',clearItemFilters);
+ el('sourceAll').addEventListener('click',()=>{sourceSelection=null;renderSources();renderCollection()});
+ el('sourceNone').addEventListener('click',()=>{sourceSelection=new Set();renderSources();renderCollection()});
+ document.addEventListener('click',e=>{if(!el('sourceMenu').contains(e.target))el('sourceMenu').open=false;if(!el('filtersMenu').contains(e.target))el('filtersMenu').open=false});
+ el('savedFilter').addEventListener('click',()=>{
+  savedOnly=!savedOnly;
+  if(savedOnly){viewAll=false;textQuery='';el('search').value='';sourceSelection=null;attunementFilter='Any';rarityFilter='Any';renderSources();renderItemFilters()}
+  renderZones();renderCollection();
+ });
+ el('resetBtn').addEventListener('click',()=>{
+  selected='Head';lockedZone=null;textQuery='';savedOnly=false;viewAll=false;sourceSelection=null;attunementFilter='Any';rarityFilter='Any';
+  el('search').value='';el('sourceMenu').open=false;el('filtersMenu').open=false;renderAll();
+ });
+ el('clearEquippedBtn').addEventListener('click',()=>{
+  if(!availableEquipped())return;
+  if(!confirm('Unequip all items from the wearer? Your CSV item catalog will not change.'))return;
+  equipped.clear();persistPersonal();renderZones();renderCollection();
+ });
+ el('editorSearch').addEventListener('input',e=>{editorFilter=e.target.value;selectedEditorKeys.clear();renderEditor()});
+ el('editorZone').addEventListener('change',()=>{selectedEditorKeys.clear();renderEditor()});
+ el('editorAttunement').addEventListener('change',()=>{selectedEditorKeys.clear();renderEditor()});
+ el('editorRarity').addEventListener('change',()=>{selectedEditorKeys.clear();renderEditor()});
+  el('editorSelectAll').addEventListener('change',e=>{for(const {row} of filteredEditorRows()){if(e.target.checked)selectedEditorKeys.add(itemKey(row));else selectedEditorKeys.delete(itemKey(row))}renderEditor()});
+  el('editorDelete').addEventListener('click',openDeleteConfirmation);el('deleteNo').addEventListener('click',closeDeleteConfirmation);el('deleteYes').addEventListener('click',confirmDeleteSelected);
+  el('deleteScrim').addEventListener('click',e=>{if(e.target===el('deleteScrim'))closeDeleteConfirmation()});
+  el('detailCloseIcon').addEventListener('click',()=>closeDetails());el('detailClose').addEventListener('click',()=>closeDetails());
+  el('detailEdit').addEventListener('click',()=>{const index=detailIndex;closeDetails(false);openEditor(index)});
+  el('detailDelete').addEventListener('click',()=>{const row=items[detailIndex];if(row)openDeleteConfirmation(new Set([itemKey(row)]))});
+  el('detailScrim').addEventListener('click',e=>{if(e.target===el('detailScrim'))closeDetails()});
+ el('addBtn').addEventListener('click',()=>openEditor());el('editorAdd').addEventListener('click',()=>openEditor());
+ el('cancelBtn').addEventListener('click',closeEditor);el('itemForm').addEventListener('submit',applyForm);
+ el('modalScrim').addEventListener('click',e=>{if(e.target===el('modalScrim'))closeEditor()});
+ document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(el('deleteScrim').classList.contains('open'))closeDeleteConfirmation();else if(el('modalScrim').classList.contains('open')&&el('characterScrim').classList.contains('open'))closeEditor();else if(el('characterScrim').classList.contains('open'))closeCharacterImporter();else if(el('equippedListScrim').classList.contains('open'))closeEquippedList();else if(el('detailScrim').classList.contains('open'))closeDetails();else if(el('modalScrim').classList.contains('open'))closeEditor()});
+ el('saveBtn').addEventListener('click',saveCSV);
+ el('importBtn').addEventListener('click',chooseCatalogCSV);
+ el('buildImportBtn').addEventListener('click',()=>{el('buildImportFile').value='';el('buildImportFile').click()});
+ el('buildImportFile').addEventListener('change',async e=>{
+  const file=e.target.files?.[0];e.target.value='';if(file)await importBuildPDF(file);
+ });
+ el('buildUseCSV').addEventListener('click',()=>selectCatalog('csv'));
+ el('buildUseImported').addEventListener('click',()=>selectCatalog('build'));
+ el('buildDiscard').addEventListener('click',()=>{
+  if(!temporaryBuildItems)return;
+  if((buildDirty||(activeCatalog==='build'&&dirty))&&!confirm('Discard the unsaved temporary build edits? Your CSV catalog will be preserved.'))return;
+  if(activeCatalog==='build')selectCatalog('csv');
+  temporaryBuildItems=null;buildSaved=new Set();buildEquipped=new Set();buildDirty=false;
+  renderToolbar();notify('Temporary PDF build discarded. CSV catalog unchanged.');
+ });
+ el('importFile').addEventListener('change',async e=>{
+  const file=e.target.files?.[0];
+  e.target.value=''; // Allow same-file selection repeatedly, even after a failed import.
+  if(file)await importCSV(file);
+ });
+ // Alternative to the Windows chooser: drop a CSV file onto Data / CSV.
+ const dataView=el('dataView');
+ dataView.addEventListener('dragover',e=>{
+  if(e.dataTransfer?.types?.includes('Files')){e.preventDefault();e.dataTransfer.dropEffect='copy'}
+ });
+ dataView.addEventListener('drop',async e=>{
+  if(!e.dataTransfer?.files?.length)return;
+  e.preventDefault();
+  const file=e.dataTransfer.files[0];
+  if(/\.pdf$/i.test(file.name))await importBuildPDF(file);
+  else if(/\.csv$/i.test(file.name))await importCSV(file);
+  else notify('Please drop an Arcane Wardrobe PDF or a .csv catalog file.');
+ });
+
+ window.addEventListener('beforeunload',event=>{if(dirty||csvDirty||buildDirty){event.preventDefault();event.returnValue=''}});
+}
+function start(){
+ let display='auto';try{display=localStorage.getItem('arcane-wardrobe-display-v1')||'auto'}catch{}
+ applyDisplayMode(display);
+ initZoneControls();fieldOptions(el('fieldZone'),LOCATION_OPTIONS);fieldOptions(el('fieldRarity'),RARITIES);fieldOptions(el('fieldAttune'),ATTUNEMENTS);
+ fieldOptions(el('editorZone'),['all',...LOCATION_OPTIONS]);el('editorZone').options[0].text='Every location';
+ setupEditorColumnResizers();
+ setupEditorSorting();
+ setupEditorTextSize();
+ setupCollectionTextSize();
+ attachEvents();initCharacterImporter();renderAll();setupMatchedFooters();
+ notify('HTML edition ready. Import magic_items.csv from the Data / CSV tab to load the catalog.');
+}
+start();
+</script>
+</body>
+</html>
